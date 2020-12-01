@@ -2,6 +2,7 @@ package br.com.augusto.chucknorrisfacts
 
 import android.app.Application
 import br.com.augusto.chucknorrisfacts.app.module.ModuleInterface
+import br.com.augusto.chucknorrisfacts.modules.main.MainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 
@@ -31,6 +32,7 @@ class MainApplication: Application() {
 
     fun getModules(): List<ModuleInterface> {
         return listOf(
+            MainModule()
         )
     }
 }
