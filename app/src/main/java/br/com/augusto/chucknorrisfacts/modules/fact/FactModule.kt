@@ -5,7 +5,7 @@ import br.com.augusto.chucknorrisfacts.app.module.ModuleInterface
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.FactRepository
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
-import br.com.augusto.chucknorrisfacts.modules.fact.ui.FactsViewModel
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
