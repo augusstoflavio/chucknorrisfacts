@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:maxLines="8"
+                    android:textSize="30sp"
                     tools:text="@tools:sample/lorem/random" />
 
                 <LinearLayout

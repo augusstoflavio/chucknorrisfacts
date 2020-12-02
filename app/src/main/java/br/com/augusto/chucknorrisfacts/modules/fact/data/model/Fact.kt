@@ -4,4 +4,8 @@ data class Fact (
     var categories: List<String>,
     var value: String,
     var url: String
-)
+) {
+    fun isLongFact(): Boolean {
+        return value.length > 80
+    }
+}

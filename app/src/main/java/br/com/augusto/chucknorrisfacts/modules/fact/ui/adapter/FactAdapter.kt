@@ -19,6 +19,12 @@ class FactAdapter(val facts: List<Fact>): RecyclerView.Adapter<FactAdapter.FactH
     override fun onBindViewHolder(holder: FactHolder, position: Int) {
         val fact = this.facts[position]
         holder.value.text = fact.value
+
+        if (fact.isLongFact()) {
+            holder.value.textSize = 18.toFloat()
+        } else {
+            holder.value.textSize = 25.toFloat()
+        }
     }
 
     override fun getItemCount(): Int {
