@@ -18,24 +18,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        observerFacts()
+        observerLoading()
+        observerError()
+
+        factsViewModel.searchFacts("word")
+    }
+
+    private fun observerFacts() {
         factsViewModel.facts.observe(this, {
-           val adapter = FactAdapter(it)
+            val adapter = FactAdapter(it)
             facts_list.adapter = adapter
             facts_list.layoutManager = LinearLayoutManager(applicationContext)
         })
+    }
 
-        factsViewModel.searchFacts("word")
+    private fun observerError() {
+        factsViewModel.error.observe(this, {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
+        })
+    }
 
+    private fun observerLoading() {
         factsViewModel.loading.observe(this, {
             if (it) {
                 progress_bar.visibility = View.VISIBLE
             } else {
                 progress_bar.visibility = View.GONE
             }
-        })
-
-        factsViewModel.error.observe(this, {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
         })
     }
 }
