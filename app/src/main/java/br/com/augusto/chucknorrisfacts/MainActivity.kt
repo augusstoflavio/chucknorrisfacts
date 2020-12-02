@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.FactAdapter
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickFactListener
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnClickFactListener {
 
     val factsViewModel: FactsViewModel by viewModel()
 
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observerFacts() {
         factsViewModel.facts.observe(this, {
-            val adapter = FactAdapter(it)
+            val adapter = FactAdapter(it, this)
             facts_list.adapter = adapter
             facts_list.layoutManager = LinearLayoutManager(applicationContext)
         })
@@ -47,5 +50,13 @@ class MainActivity : AppCompatActivity() {
                 progress_bar.visibility = View.GONE
             }
         })
+    }
+
+    override fun sharedFact(fact: Fact) {
+        ShareCompat.IntentBuilder.from(this)
+            .setType("text/plain")
+            .setText(fact.value)
+            .setSubject(fact.url)
+            .startChooser()
     }
 }

@@ -3,12 +3,16 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 
-class FactAdapter(val facts: List<Fact>): RecyclerView.Adapter<FactAdapter.FactHolder>() {
+class FactAdapter(
+    val facts: List<Fact>,
+    val onClickListener: OnClickFactListener
+): RecyclerView.Adapter<FactAdapter.FactHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactHolder {
         val v = LayoutInflater.from(parent.getContext())
@@ -25,6 +29,10 @@ class FactAdapter(val facts: List<Fact>): RecyclerView.Adapter<FactAdapter.FactH
         } else {
             holder.value.textSize = 25.toFloat()
         }
+
+        holder.sharedButton.setOnClickListener {
+            onClickListener.sharedFact(fact)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -33,5 +41,10 @@ class FactAdapter(val facts: List<Fact>): RecyclerView.Adapter<FactAdapter.FactH
 
     inner class FactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var value: TextView = itemView.findViewById(R.id.value)
+        var sharedButton: ImageView = itemView.findViewById(R.id.shared_button)
     }
+}
+
+interface OnClickFactListener {
+    fun sharedFact(fact: Fact)
 }
