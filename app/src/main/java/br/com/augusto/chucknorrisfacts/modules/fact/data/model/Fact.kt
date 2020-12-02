@@ -8,4 +8,12 @@ data class Fact (
     fun isLongFact(): Boolean {
         return value.length > 80
     }
+
+    fun getCategory(): String {
+        if (categories.isEmpty()) {
+            return  "Uncategorized"
+        }
+
+        return categories.first()
+    }
 }
