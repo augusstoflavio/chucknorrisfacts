@@ -2,6 +2,7 @@ package br.com.augusto.chucknorrisfacts
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.FactAdapter
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         factsViewModel.facts.observe(this, {
-           var adapter = FactAdapter(it)
+           val adapter = FactAdapter(it)
             facts_list.adapter = adapter
             facts_list.layoutManager = LinearLayoutManager(applicationContext)
         })
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 progress_bar.visibility = View.GONE
             }
+        })
+
+        factsViewModel.error.observe(this, {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
         })
     }
 }
