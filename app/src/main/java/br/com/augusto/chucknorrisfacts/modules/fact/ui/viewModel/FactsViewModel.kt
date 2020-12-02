@@ -28,15 +28,17 @@ class FactsViewModel(
             .search(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                error.value = it.message
-            }
-            .doOnComplete {
+            .doAfterTerminate {
                 loading.value = false
             }
-            .subscribe {
-                facts.value = it
-            }
+            .subscribe (
+                {
+                    facts.value = it
+                },
+                {
+                    error.value = it.message
+                }
+            )
 
         compositeDisposable.add(disposable)
     }
