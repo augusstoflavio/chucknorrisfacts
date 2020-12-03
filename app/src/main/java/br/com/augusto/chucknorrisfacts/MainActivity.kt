@@ -1,6 +1,8 @@
 package br.com.augusto.chucknorrisfacts
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,7 @@ import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickFactListen
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity(), OnClickFactListener {
 
@@ -26,6 +29,11 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
         observerError()
 
         factsViewModel.searchFacts("word")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.main_menu, menu)
+        return true
     }
 
     private fun observerFacts() {
@@ -58,5 +66,20 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
             .setText(fact.value)
             .setSubject(fact.url)
             .startChooser()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_search -> {
+                openSearch()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openSearch() {
+        // TODO implementar a abertura do filtro
+        Toast.makeText(applicationContext, "Search", Toast.LENGTH_SHORT).show()
     }
 }
