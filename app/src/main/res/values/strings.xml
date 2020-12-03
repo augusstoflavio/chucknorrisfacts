@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Chuck Norris Facts</string>
     <string name="filter">Filtrar</string>
+    <string name="hint_search_fact">Enter your search term</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="past_searchs">Past Searchs</string>
 </resources>

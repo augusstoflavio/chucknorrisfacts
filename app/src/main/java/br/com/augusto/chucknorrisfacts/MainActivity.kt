@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.augusto.chucknorrisfacts.app.ui.startDialog
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.FactAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickFactListener
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog.FilterFactsDialog
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -79,7 +81,6 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
     }
 
     private fun openSearch() {
-        // TODO implementar a abertura do filtro
-        Toast.makeText(applicationContext, "Search", Toast.LENGTH_SHORT).show()
+        startDialog(FilterFactsDialog())
     }
 }
