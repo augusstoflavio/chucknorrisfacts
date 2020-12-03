@@ -1,7 +1,7 @@
 package br.com.augusto.chucknorrisfacts.modules.fact.data.repository
 
 import br.com.augusto.chucknorrisfacts.app.database.Database
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Categorie
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
 import io.reactivex.Flowable
@@ -22,17 +22,17 @@ class FactRepository(private var factService: FactService) : IFactRepository {
         }
     }
 
-    override fun categories(): Flowable<List<Categorie>> {
+    override fun categories(): Flowable<List<Category>> {
         return Single.merge(
             categoriesFromDatabase(),
             categoriesFromApi()
         )
     }
 
-    private fun categoriesFromApi(): Single<List<Categorie>> {
+    private fun categoriesFromApi(): Single<List<Category>> {
         return factService.categories().map { it ->
             it.map {
-                val categorie = Categorie()
+                val categorie = Category()
                 categorie.name = it
                 return@map categorie
             }
@@ -41,16 +41,16 @@ class FactRepository(private var factService: FactService) : IFactRepository {
         }
     }
 
-    private fun categoriesFromDatabase(): Single<List<Categorie>> {
+    private fun categoriesFromDatabase(): Single<List<Category>> {
         return Single.create {
             getCategoriesFromDatabase()
         }
     }
 
-    private fun getCategoriesFromDatabase(): MutableList<Categorie>? {
+    private fun getCategoriesFromDatabase(): MutableList<Category>? {
         val realm = Database.getInstance()
         val categories = realm.copyFromRealm(
-            realm.where(Categorie::class.java)
+            realm.where(Category::class.java)
                 .findAll()
         )
         realm.close()
@@ -58,7 +58,7 @@ class FactRepository(private var factService: FactService) : IFactRepository {
         return categories
     }
 
-    private fun saveInDatabase(categories: List<Categorie>) {
+    private fun saveInDatabase(categories: List<Category>) {
         val realm = Database.getInstance()
         realm.beginTransaction()
         realm.copyToRealmOrUpdate(categories)

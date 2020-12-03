@@ -12,7 +12,7 @@ import br.com.augusto.chucknorrisfacts.app.ui.startDialog
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.FactAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickFactListener
-import br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog.FilterFactsDialog
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog.SearchFactsDialog
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -81,6 +81,6 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
     }
 
     private fun openSearch() {
-        startDialog(FilterFactsDialog())
+        startDialog(SearchFactsDialog())
     }
 }
