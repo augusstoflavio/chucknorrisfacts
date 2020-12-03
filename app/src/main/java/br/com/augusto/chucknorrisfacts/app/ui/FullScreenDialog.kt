@@ -30,11 +30,11 @@ abstract class FullScreenDialog: DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-//        val view = inflater.inflate(R.layout.layout_full_screen_dialog, container, false)
-//        toolbar = view.findViewById(R.id.toolbar_app) as Toolbar
-//        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
-//        toolbar.setNavigationOnClickListener { view1 ->dialog?.dismiss() }
-//        toolbar.title = getDialogTitle()
+        val view = inflater.inflate(R.layout.layout_full_screen_dialog, container, false)
+        toolbar = view.findViewById(R.id.toolbar_app) as Toolbar
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24)
+        toolbar.setNavigationOnClickListener { view1 ->dialog?.dismiss() }
+        toolbar.title = getDialogTitle()
 
         return view
     }
