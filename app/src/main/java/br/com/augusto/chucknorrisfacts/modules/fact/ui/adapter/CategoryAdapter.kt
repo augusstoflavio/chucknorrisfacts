@@ -9,7 +9,8 @@ import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 
 class CategoryAdapter(
-    val categories: List<Category>
+    val categories: List<Category>,
+    val onClickCategoryListener: OnClickCategoryListener
 ): RecyclerView.Adapter<CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -21,6 +22,7 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         val category = this.categories[position]
         holder.setCategory(category)
+        holder.setOnClickCategotyListener(category, onClickCategoryListener)
     }
 
     override fun getItemCount(): Int {
@@ -34,4 +36,17 @@ class CategoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun setCategory(category: Category) {
         categoryText.text = category.name
     }
+
+    fun setOnClickCategotyListener(
+        category: Category,
+        onClickCategoryListener: OnClickCategoryListener
+    ) {
+        itemView.setOnClickListener {
+            onClickCategoryListener.onClick(category)
+        }
+    }
+}
+
+interface OnClickCategoryListener {
+    fun onClick(category: Category)
 }
