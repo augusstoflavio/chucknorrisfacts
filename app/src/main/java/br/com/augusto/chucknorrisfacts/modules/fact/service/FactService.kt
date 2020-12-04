@@ -12,5 +12,5 @@ interface FactService {
     fun categories(): Single<List<String>>
 
     @GET("jokes/search")
-    fun searchFacts(@Query("query") query: String): Observable<SearchResponse>
+    fun searchFacts(@Query("query") query: String): Single<SearchResponse>
 }

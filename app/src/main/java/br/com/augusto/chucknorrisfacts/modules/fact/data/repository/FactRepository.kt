@@ -5,12 +5,11 @@ import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 class FactRepository(private var factService: FactService) : IFactRepository {
 
-    override fun search(query: String): Observable<List<Fact>> {
+    override fun search(query: String): Single<List<Fact>> {
         return factService.searchFacts(query).map {
             it.result.map {
                 Fact(

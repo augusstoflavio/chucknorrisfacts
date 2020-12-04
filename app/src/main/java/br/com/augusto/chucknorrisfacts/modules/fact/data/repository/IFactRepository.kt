@@ -4,8 +4,9 @@ import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 
 interface IFactRepository {
-    fun search(query: String): Observable<List<Fact>>
+    fun search(query: String): Single<List<Fact>>
     fun categories(): Flowable<List<Category>>
 }
