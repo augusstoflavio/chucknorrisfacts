@@ -1,6 +1,7 @@
 package br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -36,8 +37,17 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener {
             suggestions.adapter = categoryAdapter
             suggestions.layoutManager =
                 StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-            Toast.makeText(context, it.size.toString(), Toast.LENGTH_SHORT).show()
         })
+
+        search.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
+        search.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                factsViewModel.searchFacts(search.text.toString())
+                dialog?.dismiss()
+            }
+
+            return@setOnKeyListener false
+        }
     }
 
     override fun onClick(category: Category) {
