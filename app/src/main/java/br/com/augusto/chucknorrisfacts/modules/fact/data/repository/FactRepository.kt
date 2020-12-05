@@ -19,7 +19,7 @@ class FactRepository(private var factService: FactService) : IFactRepository {
                 Fact(
                     categories = it.categories,
                     value = it.value,
-                    url = it.value
+                    url = it.url
                 )
             }
         }
