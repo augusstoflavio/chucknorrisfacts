@@ -41,9 +41,7 @@ class FactRepository(private var factService: FactService) : IFactRepository {
     }
 
     private fun categoriesFromDatabase(): Single<List<Category>> {
-        return Single.create {
-            getCategoriesFromDatabase()
-        }
+        return Single.just(getCategoriesFromDatabase())
     }
 
     private fun getCategoriesFromDatabase(): MutableList<Category>? {
