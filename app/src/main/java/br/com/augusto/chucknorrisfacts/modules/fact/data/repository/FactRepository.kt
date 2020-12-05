@@ -7,6 +7,7 @@ import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.realm.Sort
 import java.util.*
 
 class FactRepository(private var factService: FactService) : IFactRepository {
@@ -60,11 +61,27 @@ class FactRepository(private var factService: FactService) : IFactRepository {
         return Single.just(getCategoriesFromDatabase())
     }
 
+    override fun lastSearchs(): Single<List<Search>> {
+        return Single.just(getLastSearchsDatabase())
+    }
+
     private fun getCategoriesFromDatabase(): MutableList<Category>? {
         val realm = Database.getInstance()
         val categories = realm.copyFromRealm(
             realm.where(Category::class.java)
                 .findAll()
+        )
+        realm.close()
+
+        return categories
+    }
+
+    private fun getLastSearchsDatabase(): MutableList<Search>? {
+        val realm = Database.getInstance()
+        val categories = realm.copyFromRealm(
+            realm.where(Search::class.java)
+                .findAll()
+                .sort("date", Sort.DESCENDING)
         )
         realm.close()
 

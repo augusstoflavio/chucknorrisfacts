@@ -3,7 +3,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.app.ui.FullScreenDialog
@@ -42,16 +42,29 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener {
         search.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
         search.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                factsViewModel.searchFacts(search.text.toString())
-                dialog?.dismiss()
+                search(search.text.toString())
             }
 
             return@setOnKeyListener false
         }
+
+        searchFactsViewModel.lastSearchs.observe(this, {
+            val searchs = it
+            val adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, searchs)
+            last_searchs.adapter = adapter
+            last_searchs.setOnItemClickListener { _, _, position, _ ->
+                val search = searchs[position]
+                search(search)
+            }
+        })
     }
 
     override fun onClick(category: Category) {
-        factsViewModel.searchFacts(category.name!!)
+        search(category.name!!)
+    }
+
+    private fun search(query: String) {
+        factsViewModel.searchFacts(query)
         dialog?.dismiss()
     }
 }
