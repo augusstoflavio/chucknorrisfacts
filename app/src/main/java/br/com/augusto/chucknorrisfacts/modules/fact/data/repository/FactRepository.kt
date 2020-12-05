@@ -3,13 +3,17 @@ package br.com.augusto.chucknorrisfacts.modules.fact.data.repository
 import br.com.augusto.chucknorrisfacts.app.database.Database
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
 import io.reactivex.Flowable
 import io.reactivex.Single
+import java.util.*
 
 class FactRepository(private var factService: FactService) : IFactRepository {
 
     override fun search(query: String): Single<List<Fact>> {
+        saveSearch(query)
+
         return factService.searchFacts(query).map {
             it.result.map {
                 Fact(
@@ -19,6 +23,18 @@ class FactRepository(private var factService: FactService) : IFactRepository {
                 )
             }
         }
+    }
+
+    private fun saveSearch(query: String) {
+        val search = Search()
+        search.name = query
+        search.date = Date()
+
+        val realm = Database.getInstance()
+        realm.beginTransaction()
+        realm.copyToRealmOrUpdate(search)
+        realm.commitTransaction()
+        realm.close()
     }
 
     override fun categories(): Flowable<List<Category>> {
