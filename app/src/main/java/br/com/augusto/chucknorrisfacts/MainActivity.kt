@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        factsViewModel.currentSearch.observe(this, {
+            supportActionBar?.subtitle = it
+        })
+
         observerFacts()
         observerLoading()
         observerError()
