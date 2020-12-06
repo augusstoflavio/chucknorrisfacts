@@ -26,6 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/list_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            tools:text="@tools:sample/lorem" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

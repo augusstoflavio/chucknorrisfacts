@@ -43,6 +43,18 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
 
     private fun observerFacts() {
         factsViewModel.facts.observe(this, {
+            if (it == null) {
+                showListMessage("Busque os fatos de chuck norris")
+                return@observe
+            }
+
+            if (it.isEmpty()) {
+                showListMessage("Nenhum fato correspondente a sua busca")
+                return@observe
+            }
+
+            hideListMessage()
+
             val adapter = FactAdapter(it, this)
             facts_list.adapter = adapter
             facts_list.layoutManager = LinearLayoutManager(applicationContext)
@@ -85,5 +97,16 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
 
     private fun openSearch() {
         startDialog(SearchFactsDialog())
+    }
+
+    private fun showListMessage(message: String) {
+        facts_list.visibility = View.GONE
+        list_message.visibility = View.VISIBLE
+        list_message.text = message
+    }
+
+    private fun hideListMessage() {
+        facts_list.visibility = View.VISIBLE
+        list_message.visibility = View.GONE
     }
 }

@@ -15,16 +15,17 @@ class FactsViewModel(
     private var networkState: NetworkState
 ): ViewModel() {
 
-    var facts: MutableLiveData<List<Fact>> = MutableLiveData()
+    var facts: MutableLiveData<List<Fact>?> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
     var loading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-        facts.value = listOf()
+        facts.value = null
         loading.value = false
     }
 
     fun searchFacts(query: String) {
+        facts.value = null
         if (!networkState.isConnected()) {
             error.value = "Verifique a sua conexão"
             return
