@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
     override fun sharedFact(fact: Fact) {
         ShareCompat.IntentBuilder.from(this)
             .setType("text/plain")
-            .setText(fact.value)
-            .setSubject(fact.url)
+            .setChooserTitle(fact.value)
+            .setText(fact.url)
             .startChooser()
     }
 
