@@ -3,6 +3,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -44,12 +45,14 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener, OnClickSea
         })
 
         search.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
-        search.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                search(search.text.toString())
-            }
 
-            return@setOnKeyListener false
+        search.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search(search.text.toString())
+                true
+            } else {
+                false
+            }
         }
 
         searchFactsViewModel.lastSearchs.observe(this, {

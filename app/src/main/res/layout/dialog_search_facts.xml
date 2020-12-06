@@ -20,6 +20,7 @@
             android:ems="10"
             android:hint="@string/hint_search_fact"
             android:inputType="textFilter"
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
