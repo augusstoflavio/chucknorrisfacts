@@ -1,16 +1,20 @@
 package br.com.augusto.chucknorrisfacts.modules.fact.data.repository
 
-import br.com.augusto.chucknorrisfacts.app.database.Database
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.category.ICategoryDao
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.search.ISearchDao
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.realm.Sort
 import java.util.*
 
-class FactRepository(private var factService: FactService) : IFactRepository {
+class FactRepository(
+    private var factService: FactService,
+    private var categoryDao: ICategoryDao,
+    private val searchDao: ISearchDao
+) : IFactRepository {
 
     override fun search(query: String): Single<List<Fact>> {
         saveSearch(query)
@@ -30,12 +34,7 @@ class FactRepository(private var factService: FactService) : IFactRepository {
         val search = Search()
         search.name = query
         search.date = Date()
-
-        val realm = Database.getInstance()
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(search)
-        realm.commitTransaction()
-        realm.close()
+        searchDao.save(search)
     }
 
     override fun categories(): Flowable<List<Category>> {
@@ -53,46 +52,17 @@ class FactRepository(private var factService: FactService) : IFactRepository {
                 return@map categorie
             }
         }.doOnSuccess {
-            saveInDatabase(it)
+            categoryDao.save(it)
         }
     }
 
     private fun categoriesFromDatabase(): Single<List<Category>> {
-        return Single.just(getCategoriesFromDatabase())
-    }
-
-    override fun lastSearchs(): Single<List<Search>> {
-        return Single.just(getLastSearchsDatabase())
-    }
-
-    private fun getCategoriesFromDatabase(): MutableList<Category>? {
-        val realm = Database.getInstance()
-        val categories = realm.copyFromRealm(
-            realm.where(Category::class.java)
-                .findAll()
+        return Single.just(
+            categoryDao.findAll()
         )
-        realm.close()
-
-        return categories
     }
 
-    private fun getLastSearchsDatabase(): MutableList<Search>? {
-        val realm = Database.getInstance()
-        val categories = realm.copyFromRealm(
-            realm.where(Search::class.java)
-                .findAll()
-                .sort("date", Sort.DESCENDING)
-        )
-        realm.close()
-
-        return categories
-    }
-
-    private fun saveInDatabase(categories: List<Category>) {
-        val realm = Database.getInstance()
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(categories)
-        realm.commitTransaction()
-        realm.close()
+    override fun lastestSearchs(amount: Long): Single<List<Search>> {
+        return Single.just(searchDao.geLatestSearches(amount))
     }
 }

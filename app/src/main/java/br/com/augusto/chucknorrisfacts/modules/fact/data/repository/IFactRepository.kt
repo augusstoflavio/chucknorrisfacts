@@ -9,5 +9,5 @@ import io.reactivex.Single
 interface IFactRepository {
     fun search(query: String): Single<List<Fact>>
     fun categories(): Flowable<List<Category>>
-    fun lastSearchs(): Single<List<Search>>
+    fun lastestSearchs(amount: Long): Single<List<Search>>
 }

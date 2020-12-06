@@ -2,6 +2,10 @@ package br.com.augusto.chucknorrisfacts.modules.fact
 
 import android.content.Context
 import br.com.augusto.chucknorrisfacts.app.module.ModuleInterface
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.category.CategoryDao
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.category.ICategoryDao
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.search.ISearchDao
+import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.search.SearchDao
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.FactRepository
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
@@ -23,8 +27,16 @@ class FactModule: ModuleInterface {
                 retrofit.create(FactService::class.java)
             }
 
+            single<ISearchDao> {
+                SearchDao()
+            }
+
+            single<ICategoryDao> {
+                CategoryDao()
+            }
+
             single<IFactRepository> {
-                FactRepository(get())
+                FactRepository(get(), get(), get())
             }
 
             viewModel {

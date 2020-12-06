@@ -47,7 +47,7 @@ class SearchFactsViewModel(
 
     fun getLastSearchs() {
         val disposable = factRepository
-            .lastSearchs()
+            .lastestSearchs(5)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
