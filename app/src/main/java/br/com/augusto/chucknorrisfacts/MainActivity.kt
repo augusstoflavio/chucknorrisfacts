@@ -63,7 +63,11 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
 
     private fun observerError() {
         factsViewModel.error.observe(this, {
+            if (it == null) {
+                return@observe
+            }
             Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
+            factsViewModel.error.value = null
         })
     }
 

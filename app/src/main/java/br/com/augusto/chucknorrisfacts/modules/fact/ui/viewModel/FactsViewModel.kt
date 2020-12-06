@@ -16,7 +16,7 @@ class FactsViewModel(
 ): ViewModel() {
 
     var facts: MutableLiveData<List<Fact>?> = MutableLiveData()
-    var error: MutableLiveData<String> = MutableLiveData()
+    var error: MutableLiveData<String?> = MutableLiveData()
     var loading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
