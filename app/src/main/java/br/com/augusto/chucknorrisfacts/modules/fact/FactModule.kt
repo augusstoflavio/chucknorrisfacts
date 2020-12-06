@@ -40,7 +40,7 @@ class FactModule: ModuleInterface {
             }
 
             viewModel {
-                FactsViewModel(get(), CompositeDisposable())
+                FactsViewModel(get(), CompositeDisposable(), get())
             }
 
             viewModel {

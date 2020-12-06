@@ -1,5 +1,6 @@
 package br.com.augusto.chucknorrisfacts
 
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
         observerFacts()
         observerLoading()
         observerError()
+
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

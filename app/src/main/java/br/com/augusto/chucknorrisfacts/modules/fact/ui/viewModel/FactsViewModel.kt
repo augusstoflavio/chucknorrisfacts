@@ -2,6 +2,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.augusto.chucknorrisfacts.app.commons.NetworkState
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,7 +11,8 @@ import io.reactivex.schedulers.Schedulers
 
 class FactsViewModel(
     private var factRepository: IFactRepository,
-    private var compositeDisposable: CompositeDisposable
+    private var compositeDisposable: CompositeDisposable,
+    private var networkState: NetworkState
 ): ViewModel() {
 
     var facts: MutableLiveData<List<Fact>> = MutableLiveData()
@@ -23,6 +25,11 @@ class FactsViewModel(
     }
 
     fun searchFacts(query: String) {
+        if (!networkState.isConnected()) {
+            error.value = "Verifique a sua conexão"
+            return
+        }
+
         if (query.length <= 3) {
             error.value = "Preencha mais de 3 caracteres para realizar a busca"
             return
