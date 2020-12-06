@@ -3,6 +3,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,7 +18,7 @@ class SearchFactsViewModel(
     var loadingCategories: MutableLiveData<Boolean> = MutableLiveData()
 
     var categories: MutableLiveData<List<Category>> = MutableLiveData()
-    var lastSearchs: MutableLiveData<List<String>> = MutableLiveData()
+    var lastSearchs: MutableLiveData<List<Search>> = MutableLiveData()
 
     init {
         getCategories()
@@ -52,9 +53,7 @@ class SearchFactsViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
                 {
-                    lastSearchs.value = it.map {
-                        it.name!!
-                    }
+                    lastSearchs.value = it
                 },
                 {
                     error.value = it.message

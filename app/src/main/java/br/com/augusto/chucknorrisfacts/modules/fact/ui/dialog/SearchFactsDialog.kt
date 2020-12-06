@@ -3,20 +3,24 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.app.ui.FullScreenDialog
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.CategoryAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickCategoryListener
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickSearchListener
+import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.SearchAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.SearchFactsViewModel
 import kotlinx.android.synthetic.main.dialog_search_facts.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener {
+class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener, OnClickSearchListener {
 
     val searchFactsViewModel: SearchFactsViewModel by viewModel()
     val factsViewModel: FactsViewModel by sharedViewModel()
@@ -49,18 +53,19 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener {
         }
 
         searchFactsViewModel.lastSearchs.observe(this, {
-            val searchs = it
-            val adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, searchs)
-            last_searchs.adapter = adapter
-            last_searchs.setOnItemClickListener { _, _, position, _ ->
-                val search = searchs[position]
-                search(search)
-            }
+            val searchAdapter = SearchAdapter(it, this)
+            last_searchs.adapter = searchAdapter
+            last_searchs.layoutManager = LinearLayoutManager(context)
+            last_searchs.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         })
     }
 
     override fun onClick(category: Category) {
         search(category.name!!)
+    }
+
+    override fun onClick(search: Search) {
+        search(search.name!!)
     }
 
     private fun search(query: String) {
