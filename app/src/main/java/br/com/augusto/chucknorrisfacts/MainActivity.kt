@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
         observerFacts()
         observerLoading()
         observerError()
-
-        factsViewModel.searchFacts("word")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

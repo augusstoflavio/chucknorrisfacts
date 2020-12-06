@@ -23,6 +23,11 @@ class FactsViewModel(
     }
 
     fun searchFacts(query: String) {
+        if (query.length <= 3) {
+            error.value = "Preencha mais de 3 caracteres para realizar a busca"
+            return
+        }
+
         loading.value = true
         val disposable = factRepository
             .search(query)
