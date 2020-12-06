@@ -10,9 +10,9 @@ class SearchDao : ISearchDao {
         val realm = Database.getInstance()
         val categories = realm.copyFromRealm(
             realm.where(Search::class.java)
+                .sort("date", Sort.DESCENDING)
                 .limit(amount)
                 .findAll()
-                .sort("date", Sort.DESCENDING)
         )
         realm.close()
 
