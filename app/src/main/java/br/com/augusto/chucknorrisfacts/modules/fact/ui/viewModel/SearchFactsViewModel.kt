@@ -36,7 +36,7 @@ class SearchFactsViewModel(
             }
             .subscribe (
                 {
-                    categories.value = it
+                    categories.value = it.shuffled().take(9)
                 },
                 {
                     error.value = it.message
