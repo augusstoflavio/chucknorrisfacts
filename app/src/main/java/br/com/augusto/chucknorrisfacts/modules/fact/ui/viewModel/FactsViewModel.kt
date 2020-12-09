@@ -21,13 +21,11 @@ class FactsViewModel(
     var currentSearch: MutableLiveData<String> = MutableLiveData()
 
     init {
-        facts.value = null
         loading.value = false
     }
 
     fun searchFacts(query: String) {
         currentSearch.value = query
-        facts.value = null
         if (!networkState.isConnected()) {
             error.value = "Verifique a sua conexão"
             return

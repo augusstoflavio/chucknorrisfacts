@@ -3,6 +3,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
+import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -33,8 +34,14 @@ class FactsViewModelTest {
     @Mock
     private lateinit var errorObserver: Observer<String?>
 
+    @Mock
+    private lateinit var factsObserver: Observer<List<Fact>?>
+
     @Captor
-    private lateinit var argumentCaptor: ArgumentCaptor<String?>
+    private lateinit var errorCaptor: ArgumentCaptor<String?>
+
+    @Captor
+    private lateinit var factsCaptor: ArgumentCaptor<List<Fact>?>
 
     @Test
     fun `when offline then set error`() {
@@ -44,9 +51,9 @@ class FactsViewModelTest {
         viewModel.searchFacts("word")
 
         Mockito.verify(errorObserver, Mockito.times(1))
-            .onChanged(argumentCaptor.capture())
+            .onChanged(errorCaptor.capture())
 
-        val values = argumentCaptor.allValues
+        val values = errorCaptor.allValues
         Assert.assertFalse(values.isEmpty())
         Assert.assertEquals("Verifique a sua conexão", values[0])
     }
@@ -62,9 +69,9 @@ class FactsViewModelTest {
         viewModel.searchFacts("word")
 
         Mockito.verify(errorObserver, Mockito.times(0))
-            .onChanged(argumentCaptor.capture())
+            .onChanged(errorCaptor.capture())
 
-        val values = argumentCaptor.allValues
+        val values = errorCaptor.allValues
         Assert.assertTrue(values.isEmpty())
     }
 
@@ -76,11 +83,34 @@ class FactsViewModelTest {
         viewModel.searchFacts("var")
 
         Mockito.verify(errorObserver, Mockito.times(1))
-            .onChanged(argumentCaptor.capture())
+            .onChanged(errorCaptor.capture())
 
-        val values = argumentCaptor.allValues
+        val values = errorCaptor.allValues
         Assert.assertFalse(values.isEmpty())
         Assert.assertEquals("Preencha mais de 3 caracteres para realizar a busca", values[0])
+    }
+
+    @Test
+    fun `when search set facts`() {
+        val facts = listOf(
+            Fact(listOf("BRAZIL", "INTERNET"), "FACT", "HTTP://FACT"),
+            Fact(listOf("SCIENCE"), "FACT 2", "HTTP://FACT2"),
+        )
+
+        Mockito.`when`(factRepository.search("world"))
+            .thenReturn(Single.just(facts))
+
+
+        viewModel = FactsViewModel(factRepository, OnlineNetworkState())
+        viewModel.facts.observeForever(factsObserver)
+
+        viewModel.searchFacts("world")
+
+        Mockito.verify(factsObserver, Mockito.times(1))
+            .onChanged(factsCaptor.capture())
+
+        val values = factsCaptor.allValues
+        Assert.assertEquals(facts, values[0])
     }
 
     @Before
