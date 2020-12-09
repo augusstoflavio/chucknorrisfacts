@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 
-class NetworkState(private val context: Context) {
+class NetworkState(private val context: Context) : INetworkState {
 
-    fun isConnected(): Boolean {
+    override fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected

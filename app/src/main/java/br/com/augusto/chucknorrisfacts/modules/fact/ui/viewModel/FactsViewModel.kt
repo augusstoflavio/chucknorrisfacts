@@ -2,7 +2,7 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.augusto.chucknorrisfacts.app.commons.NetworkState
+import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,10 +11,10 @@ import io.reactivex.schedulers.Schedulers
 
 class FactsViewModel(
     private var factRepository: IFactRepository,
-    private var compositeDisposable: CompositeDisposable,
-    private var networkState: NetworkState
+    private var networkState: INetworkState
 ): ViewModel() {
 
+    private var compositeDisposable = CompositeDisposable()
     var facts: MutableLiveData<List<Fact>?> = MutableLiveData()
     var error: MutableLiveData<String?> = MutableLiveData()
     var loading: MutableLiveData<Boolean> = MutableLiveData()
