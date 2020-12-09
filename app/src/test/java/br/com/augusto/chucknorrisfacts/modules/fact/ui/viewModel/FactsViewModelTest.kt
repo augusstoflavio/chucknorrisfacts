@@ -4,7 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
 import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
-import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.Single
+import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.Assert
 import org.junit.Before
@@ -16,6 +17,7 @@ import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
+
 
 @RunWith(MockitoJUnitRunner::class)
 class FactsViewModelTest {
@@ -50,6 +52,23 @@ class FactsViewModelTest {
     }
 
     @Test
+    fun `when online then not set error`() {
+        Mockito.`when`(factRepository.search("word"))
+            .thenReturn(Single.just(listOf()))
+
+        viewModel = FactsViewModel(factRepository, OnlineNetworkState())
+        viewModel.error.observeForever(errorObserver)
+
+        viewModel.searchFacts("word")
+
+        Mockito.verify(errorObserver, Mockito.times(0))
+            .onChanged(argumentCaptor.capture())
+
+        val values = argumentCaptor.allValues
+        Assert.assertTrue(values.isEmpty())
+    }
+
+    @Test
     fun `when the search number of characters is less than or equal 3 set error`() {
         viewModel = FactsViewModel(factRepository, OnlineNetworkState())
         viewModel.error.observeForever(errorObserver)
@@ -66,7 +85,7 @@ class FactsViewModelTest {
 
     @Before
     fun setupMyTripViewModel() {
-        RxJavaPlugins.setIoSchedulerHandler{ Schedulers.trampoline()}
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler{ Schedulers.trampoline()}
     }
 }
 
