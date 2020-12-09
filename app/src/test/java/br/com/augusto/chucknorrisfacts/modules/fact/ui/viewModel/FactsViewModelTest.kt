@@ -49,6 +49,21 @@ class FactsViewModelTest {
         Assert.assertEquals("Verifique a sua conexão", values[0])
     }
 
+    @Test
+    fun `when the search number of characters is less than or equal 3 set error`() {
+        viewModel = FactsViewModel(factRepository, OnlineNetworkState())
+        viewModel.error.observeForever(errorObserver)
+
+        viewModel.searchFacts("var")
+
+        Mockito.verify(errorObserver, Mockito.times(1))
+            .onChanged(argumentCaptor.capture())
+
+        val values = argumentCaptor.allValues
+        Assert.assertFalse(values.isEmpty())
+        Assert.assertEquals("Preencha mais de 3 caracteres para realizar a busca", values[0])
+    }
+
     @Before
     fun setupMyTripViewModel() {
         RxJavaPlugins.setIoSchedulerHandler{ Schedulers.trampoline()}
@@ -59,5 +74,12 @@ class OfflineNetworkState: INetworkState {
 
     override fun isConnected(): Boolean {
         return false
+    }
+}
+
+class OnlineNetworkState: INetworkState {
+
+    override fun isConnected(): Boolean {
+        return true
     }
 }
