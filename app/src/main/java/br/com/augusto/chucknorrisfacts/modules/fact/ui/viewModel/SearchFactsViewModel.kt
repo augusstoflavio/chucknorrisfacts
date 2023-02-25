@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class SearchFactsViewModel(
     private var factRepository: IFactRepository,
     private var compositeDisposable: CompositeDisposable
-): ViewModel() {
+) : ViewModel() {
 
     var error: MutableLiveData<String> = MutableLiveData()
     var loadingCategories: MutableLiveData<Boolean> = MutableLiveData()
@@ -34,7 +34,7 @@ class SearchFactsViewModel(
             .doAfterTerminate {
                 loadingCategories.value = false
             }
-            .subscribe (
+            .subscribe(
                 {
                     categories.value = it.shuffled().take(9)
                 },
@@ -51,7 +51,7 @@ class SearchFactsViewModel(
             .lastestSearchs(5)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe (
+            .subscribe(
                 {
                     lastSearchs.value = it
                 },

@@ -18,7 +18,6 @@ import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class MainActivity : AppCompatActivity(), OnClickFactListener {
 
     val factsViewModel: FactsViewModel by viewModel()
@@ -27,9 +26,9 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        factsViewModel.currentSearch.observe(this, {
+        factsViewModel.currentSearch.observe(this) {
             supportActionBar?.subtitle = it
-        })
+        }
 
         observerFacts()
         observerLoading()
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
     }
 
     private fun observerFacts() {
-        factsViewModel.facts.observe(this, {
+        factsViewModel.facts.observe(this) {
             if (it == null) {
                 showListMessage("Busque os fatos de chuck norris")
                 return@observe
@@ -62,27 +61,27 @@ class MainActivity : AppCompatActivity(), OnClickFactListener {
             val adapter = FactAdapter(it, this)
             facts_list.adapter = adapter
             facts_list.layoutManager = LinearLayoutManager(applicationContext)
-        })
+        }
     }
 
     private fun observerError() {
-        factsViewModel.error.observe(this, {
+        factsViewModel.error.observe(this) {
             if (it == null) {
                 return@observe
             }
             Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
             factsViewModel.error.value = null
-        })
+        }
     }
 
     private fun observerLoading() {
-        factsViewModel.loading.observe(this, {
+        factsViewModel.loading.observe(this) {
             if (it) {
                 progress_bar.visibility = View.VISIBLE
             } else {
                 progress_bar.visibility = View.GONE
             }
-        })
+        }
     }
 
     override fun sharedFact(fact: Fact) {

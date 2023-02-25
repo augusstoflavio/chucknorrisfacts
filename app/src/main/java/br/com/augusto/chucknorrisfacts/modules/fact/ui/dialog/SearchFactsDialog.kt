@@ -21,10 +21,10 @@ import kotlinx.android.synthetic.main.dialog_search_facts.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener, OnClickSearchListener {
+class SearchFactsDialog : FullScreenDialog(), OnClickCategoryListener, OnClickSearchListener {
 
-    val searchFactsViewModel: SearchFactsViewModel by viewModel()
-    val factsViewModel: FactsViewModel by sharedViewModel()
+    private val searchFactsViewModel: SearchFactsViewModel by viewModel()
+    private val factsViewModel: FactsViewModel by sharedViewModel()
 
     override fun getDialogTitle(): String {
         return "Search facts"
@@ -37,12 +37,12 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener, OnClickSea
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchFactsViewModel.categories.observe(this, {
+        searchFactsViewModel.categories.observe(this) {
             val categoryAdapter = CategoryAdapter(it, this)
             suggestions.adapter = categoryAdapter
             suggestions.layoutManager =
                 StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        })
+        }
 
         search.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
 
@@ -55,12 +55,17 @@ class SearchFactsDialog: FullScreenDialog(), OnClickCategoryListener, OnClickSea
             }
         }
 
-        searchFactsViewModel.lastSearchs.observe(this, {
+        searchFactsViewModel.lastSearchs.observe(this) {
             val searchAdapter = SearchAdapter(it, this)
             last_searchs.adapter = searchAdapter
             last_searchs.layoutManager = LinearLayoutManager(context)
-            last_searchs.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        })
+            last_searchs.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
     }
 
     override fun onClick(category: Category) {

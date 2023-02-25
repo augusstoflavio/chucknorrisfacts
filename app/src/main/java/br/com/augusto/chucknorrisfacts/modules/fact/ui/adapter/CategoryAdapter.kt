@@ -10,8 +10,8 @@ import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
 
 class CategoryAdapter(
     val categories: List<Category>,
-    val onClickCategoryListener: OnClickCategoryListener
-): RecyclerView.Adapter<CategoryHolder>() {
+    private val onClickCategoryListener: OnClickCategoryListener
+) : RecyclerView.Adapter<CategoryHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val v = LayoutInflater.from(parent.context)

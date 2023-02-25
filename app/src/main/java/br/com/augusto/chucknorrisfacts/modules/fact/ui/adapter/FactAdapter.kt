@@ -11,8 +11,8 @@ import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
 
 class FactAdapter(
     val facts: List<Fact>,
-    val onClickListener: OnClickFactListener
-): RecyclerView.Adapter<FactHolder>() {
+    private val onClickListener: OnClickFactListener
+) : RecyclerView.Adapter<FactHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FactHolder {
         val v = LayoutInflater.from(parent.context)

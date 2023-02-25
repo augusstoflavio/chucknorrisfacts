@@ -17,10 +17,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-class FactModule: ModuleInterface {
+class FactModule : ModuleInterface {
 
     override fun getKoinModule(context: Context): Module? {
-
         return module {
             single<FactService> {
                 val retrofit = get() as Retrofit

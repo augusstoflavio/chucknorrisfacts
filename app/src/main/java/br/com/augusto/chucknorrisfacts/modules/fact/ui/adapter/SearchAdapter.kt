@@ -9,9 +9,9 @@ import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
 
 class SearchAdapter(
-    val searchs: List<Search>,
-    val onClickSearchListener: OnClickSearchListener
-): RecyclerView.Adapter<SearchHolder>() {
+    private val searchs: List<Search>,
+    private val onClickSearchListener: OnClickSearchListener
+) : RecyclerView.Adapter<SearchHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         val v = LayoutInflater.from(parent.context)

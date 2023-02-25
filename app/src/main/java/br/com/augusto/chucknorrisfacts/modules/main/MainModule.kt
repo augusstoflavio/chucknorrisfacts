@@ -10,7 +10,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class MainModule: ModuleInterface {
+class MainModule : ModuleInterface {
 
     override fun getKoinModule(context: Context): Module? {
         return module {

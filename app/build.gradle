@@ -28,6 +28,7 @@ android {
         targetCompatibility "1.8"
         sourceCompatibility "1.8"
     }
+    namespace 'br.com.augusto.chucknorrisfacts'
 }
 
 dependencies {
@@ -38,7 +39,6 @@ dependencies {
 
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.20"
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -59,9 +59,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
     //koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
 
     //mockito
     testImplementation 'org.mockito:mockito-core:5.1.1'

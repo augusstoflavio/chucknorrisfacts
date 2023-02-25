@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class FactsViewModel(
     private var factRepository: IFactRepository,
     private var networkState: INetworkState
-): ViewModel() {
+) : ViewModel() {
 
     private var compositeDisposable = CompositeDisposable()
     var facts: MutableLiveData<List<Fact>?> = MutableLiveData()
@@ -44,7 +44,7 @@ class FactsViewModel(
             .doAfterTerminate {
                 loading.value = false
             }
-            .subscribe (
+            .subscribe(
                 {
                     facts.value = it
                 },
