@@ -27,9 +27,8 @@ class MainApplication: Application() {
                 it.getKoinModule(applicationContext)
             }.filterNotNull()
 
-            modules(
-                modulesKoin
-            )
+            koin.loadModules(modulesKoin)
+            koin.createRootScope()
         }
     }
 
