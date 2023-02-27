@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
+import br.com.augusto.chucknorrisfacts.domain.model.Category
 
 class CategoryAdapter(
     val categories: List<Category>,

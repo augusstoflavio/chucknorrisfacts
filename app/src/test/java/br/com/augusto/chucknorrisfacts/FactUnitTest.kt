@@ -1,6 +1,6 @@
 package br.com.augusto.chucknorrisfacts
 
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
+import br.com.augusto.chucknorrisfacts.domain.model.Fact
 import org.junit.Assert
 import org.junit.Test
 

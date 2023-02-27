@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.app.ui.FullScreenDialog
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
+import br.com.augusto.chucknorrisfacts.ui.dialog.FullScreenDialog
+import br.com.augusto.chucknorrisfacts.domain.model.Category
+import br.com.augusto.chucknorrisfacts.domain.model.Search
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.CategoryAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickCategoryListener
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickSearchListener

@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
+import br.com.augusto.chucknorrisfacts.domain.model.Fact
 
 class FactAdapter(
     val facts: List<Fact>,

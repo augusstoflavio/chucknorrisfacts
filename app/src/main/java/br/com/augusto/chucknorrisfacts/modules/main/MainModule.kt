@@ -1,10 +1,10 @@
 package br.com.augusto.chucknorrisfacts.modules.main
 
 import android.content.Context
-import br.com.augusto.chucknorrisfacts.app.api.RetrofitFactory
+import br.com.augusto.chucknorrisfacts.data.remote.RetrofitFactory
 import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
 import br.com.augusto.chucknorrisfacts.app.commons.NetworkState
-import br.com.augusto.chucknorrisfacts.app.database.Database
+import br.com.augusto.chucknorrisfacts.data.local.database.Database
 import br.com.augusto.chucknorrisfacts.app.module.ModuleInterface
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
