@@ -3,8 +3,8 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
-import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
+import br.com.augusto.chucknorrisfacts.domain.model.Fact
+import br.com.augusto.chucknorrisfacts.domain.repository.FactRepository
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +29,7 @@ class FactsViewModelTest {
     private lateinit var viewModel: FactsViewModel
 
     @Mock
-    private lateinit var factRepository: IFactRepository
+    private lateinit var factRepository: FactRepository
 
     @Mock
     private lateinit var errorObserver: Observer<String?>
@@ -60,7 +60,7 @@ class FactsViewModelTest {
 
     @Test
     fun `when online then not set error`() {
-        Mockito.`when`(factRepository.search("word"))
+        Mockito.`when`(factRepository.searchFacts("word"))
             .thenReturn(Single.just(listOf()))
 
         viewModel = FactsViewModel(factRepository, OnlineNetworkState())
@@ -97,7 +97,7 @@ class FactsViewModelTest {
             Fact(listOf("SCIENCE"), "FACT 2", "HTTP://FACT2"),
         )
 
-        Mockito.`when`(factRepository.search("world"))
+        Mockito.`when`(factRepository.searchFacts("world"))
             .thenReturn(Single.just(facts))
 
 

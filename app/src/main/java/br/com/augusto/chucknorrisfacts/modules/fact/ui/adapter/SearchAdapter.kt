@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
+import br.com.augusto.chucknorrisfacts.domain.model.Search
 
 class SearchAdapter(
     private val searchs: List<Search>,

@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.augusto.chucknorrisfacts.app.ui.startDialog
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
+import br.com.augusto.chucknorrisfacts.ui.extensions.startDialog
+import br.com.augusto.chucknorrisfacts.domain.model.Fact
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.FactAdapter
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.adapter.OnClickFactListener
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.dialog.SearchFactsDialog

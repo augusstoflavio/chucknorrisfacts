@@ -2,15 +2,15 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Category
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Search
-import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
+import br.com.augusto.chucknorrisfacts.domain.model.Category
+import br.com.augusto.chucknorrisfacts.domain.model.Search
+import br.com.augusto.chucknorrisfacts.domain.repository.FactRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class SearchFactsViewModel(
-    private var factRepository: IFactRepository,
+    private var factRepository: FactRepository,
     private var compositeDisposable: CompositeDisposable
 ) : ViewModel() {
 
@@ -28,7 +28,7 @@ class SearchFactsViewModel(
     fun getCategories() {
         loadingCategories.value = true
         val disposable = factRepository
-            .categories()
+            .getCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate {
@@ -48,7 +48,7 @@ class SearchFactsViewModel(
 
     fun getLastSearchs() {
         val disposable = factRepository
-            .lastestSearchs(5)
+            .getLatestSearches(5)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

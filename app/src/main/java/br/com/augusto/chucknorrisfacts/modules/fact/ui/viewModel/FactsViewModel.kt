@@ -3,14 +3,14 @@ package br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.augusto.chucknorrisfacts.app.commons.INetworkState
-import br.com.augusto.chucknorrisfacts.modules.fact.data.model.Fact
-import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
+import br.com.augusto.chucknorrisfacts.domain.model.Fact
+import br.com.augusto.chucknorrisfacts.domain.repository.FactRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class FactsViewModel(
-    private var factRepository: IFactRepository,
+    private var factRepository: FactRepository,
     private var networkState: INetworkState
 ) : ViewModel() {
 
@@ -38,7 +38,7 @@ class FactsViewModel(
 
         loading.value = true
         val disposable = factRepository
-            .search(query)
+            .searchFacts(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doAfterTerminate {

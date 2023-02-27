@@ -2,13 +2,13 @@ package br.com.augusto.chucknorrisfacts.modules.fact
 
 import android.content.Context
 import br.com.augusto.chucknorrisfacts.app.module.ModuleInterface
-import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.category.CategoryDao
-import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.category.ICategoryDao
-import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.search.ISearchDao
-import br.com.augusto.chucknorrisfacts.modules.fact.data.dao.search.SearchDao
-import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.FactRepository
-import br.com.augusto.chucknorrisfacts.modules.fact.data.repository.IFactRepository
-import br.com.augusto.chucknorrisfacts.modules.fact.service.FactService
+import br.com.augusto.chucknorrisfacts.data.local.database.dao.CategoryDaoImpl
+import br.com.augusto.chucknorrisfacts.data.local.database.dao.CategoryDao
+import br.com.augusto.chucknorrisfacts.data.local.database.dao.SearchDao
+import br.com.augusto.chucknorrisfacts.data.local.database.dao.SearchDaoImpl
+import br.com.augusto.chucknorrisfacts.domain.repository.FactRepositoryImpl
+import br.com.augusto.chucknorrisfacts.domain.repository.FactRepository
+import br.com.augusto.chucknorrisfacts.data.remote.FactService
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.FactsViewModel
 import br.com.augusto.chucknorrisfacts.modules.fact.ui.viewModel.SearchFactsViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -26,16 +26,16 @@ class FactModule : ModuleInterface {
                 retrofit.create(FactService::class.java)
             }
 
-            single<ISearchDao> {
-                SearchDao()
+            single<SearchDao> {
+                SearchDaoImpl()
             }
 
-            single<ICategoryDao> {
-                CategoryDao()
+            single<CategoryDao> {
+                CategoryDaoImpl()
             }
 
-            single<IFactRepository> {
-                FactRepository(get(), get(), get())
+            single<FactRepository> {
+                FactRepositoryImpl(get(), get(), get())
             }
 
             viewModel {
