@@ -10,15 +10,14 @@ import kotlinx.coroutines.withContext
 class FactDataSourceImpl(private val factService: FactService) : FactDataSource {
 
     override suspend fun searchDataSource(query: String): Result<List<Fact>> {
-        return withContext(Dispatchers.IO) {
-            try {
-                factService.searchFacts(query)
-                Result.Success(
-                    listOf()
-                )
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
+        return try {
+            factService.searchFacts(query)
+            Result.Success(
+                listOf()
+            )
+        } catch (e: Exception) {
+            Result.Error(e)
         }
+
     }
 }
