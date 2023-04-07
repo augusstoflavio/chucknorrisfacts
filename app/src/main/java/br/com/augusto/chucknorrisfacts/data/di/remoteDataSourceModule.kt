@@ -8,10 +8,15 @@ import org.koin.dsl.module
 
 val remoteDataSourceModule = module {
     single<CategoryDataSource> {
-        CategoryDataSourceImpl(get())
+        CategoryDataSourceImpl(
+            factService = get(),
+        )
     }
 
     single<FactDataSource> {
-        FactDataSourceImpl(get())
+        FactDataSourceImpl(
+            factService = get(),
+            factMapper = get(),
+        )
     }
 }

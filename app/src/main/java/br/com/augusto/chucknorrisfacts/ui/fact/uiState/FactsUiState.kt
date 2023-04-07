@@ -6,5 +6,5 @@ data class FactsUiState(
     val search: String? = null,
     val showFactsList: Boolean = false,
     val showMessageToSearchFact: Boolean = true,
-    val showMessageNoFactForSearch: Boolean = false
+    val showMessageNoFactFound: Boolean = false
 )

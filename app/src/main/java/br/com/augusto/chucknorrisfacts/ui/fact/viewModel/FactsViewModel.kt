@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Fact
 import br.com.augusto.chucknorrisfacts.domain.useCase.SearchFactsUseCase
+import br.com.augusto.chucknorrisfacts.ui.fact.mapper.FactUiMapper
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.FactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
@@ -16,7 +17,8 @@ import br.com.augusto.chucknorrisfacts.ui.utils.SingleEventLiveData
 import kotlinx.coroutines.launch
 
 class FactsViewModel(
-    private var searchFactsUseCase: SearchFactsUseCase
+    private val searchFactsUseCase: SearchFactsUseCase,
+    private val factUiMapper: FactUiMapper
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(FactsUiState())
@@ -38,13 +40,13 @@ class FactsViewModel(
 
     private fun handleOnInitScreen() {
         _uiState.value = _uiState.value?.copy(
-            showMessageToSearchFact = true
+            showMessageToSearchFact = true,
         )
     }
 
     private fun search() {
         _uiState.value = _uiState.value?.copy(
-            showLoading = true
+            showLoading = true,
         )
         viewModelScope.launch {
             when (val result = searchFactsUseCase(_uiState.value?.search ?: "")) {
@@ -57,30 +59,20 @@ class FactsViewModel(
     private fun onSearchFactsSuccessfully(facts: List<Fact>) {
         _uiState.value = _uiState.value?.copy(
             showLoading = false,
-            facts = facts.map {
-                FactUi(
-                    description = it.value,
-                    category = it.categories.first(),
-                    descriptionSize = if (it.value.length > 80) {
-                        18F
-                    } else {
-                        25F
-                    }
-                )
-            },
+            facts = facts.map(factUiMapper::fromModel),
             showFactsList = facts.isNotEmpty(),
-            showMessageNoFactForSearch = facts.isEmpty()
+            showMessageNoFactFound = facts.isEmpty(),
         )
     }
 
     private fun onSearchFactsFailed(result: Result.Error) {
         _uiState.value = _uiState.value?.copy(
-            showLoading = false
+            showLoading = false,
         )
 
         _uiError.value = FactsUiError(
             error = result,
-            tryAgainUiEvent = FactsUiEvent.OnClickTryAgainSearchFacts
+            tryAgainUiEvent = FactsUiEvent.OnClickTryAgainSearchFacts,
         )
     }
 
@@ -100,7 +92,8 @@ class FactsViewModel(
         _uiState.value = _uiState.value?.copy(
             search = search,
             showMessageToSearchFact = false,
-            showFactsList = true
+            showMessageNoFactFound = false,
+            showFactsList = true,
         )
 
         search()

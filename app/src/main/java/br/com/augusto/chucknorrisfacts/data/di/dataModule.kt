@@ -1,6 +1,7 @@
 package br.com.augusto.chucknorrisfacts.data.di
 
-val dataModule = apiModule +
+val dataModules = apiModule +
     dataBaseModule +
     localDataSourceModule +
-    remoteDataSourceModule
+    remoteDataSourceModule +
+    mapperModule
