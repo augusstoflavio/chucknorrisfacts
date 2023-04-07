@@ -2,10 +2,7 @@ package br.com.augusto.chucknorrisfacts.ui.fact.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.databinding.AdapterFactBinding
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactUi
 
@@ -13,15 +10,13 @@ class FactHolder(
     private val binding: AdapterFactBinding,
     private val onClickFact: (FactUi) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var value: TextView = itemView.findViewById(R.id.value)
-    private var sharedButton: ImageView = itemView.findViewById(R.id.shared_button)
-    private var category: TextView = itemView.findViewById(R.id.category)
 
     fun bind(factUi: FactUi) {
         with(binding) {
-            value.text = factUi.description
+            val context = binding.root.context
+            value.text = factUi.description.toString(context)
             value.textSize = factUi.descriptionSize
-            category.text = factUi.category
+            category.text = factUi.category.toString(context)
             sharedButton.setOnClickListener {
                 onClickFact.invoke(factUi)
             }
