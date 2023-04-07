@@ -1,32 +1,38 @@
 package br.com.augusto.chucknorrisfacts.ui.fact.adapter
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.domain.model.Fact
+import br.com.augusto.chucknorrisfacts.databinding.AdapterFactBinding
+import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactUi
 
-class FactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class FactHolder(
+    private val binding: AdapterFactBinding,
+    private val onClickFact: (FactUi) -> Unit,
+) : RecyclerView.ViewHolder(binding.root) {
     private var value: TextView = itemView.findViewById(R.id.value)
     private var sharedButton: ImageView = itemView.findViewById(R.id.shared_button)
     private var category: TextView = itemView.findViewById(R.id.category)
 
-    fun setFact(fact: Fact) {
-        value.text = fact.value
-
-        if (fact.isLongFact()) {
-            value.textSize = 18.toFloat()
-        } else {
-            value.textSize = 25.toFloat()
+    fun bind(factUi: FactUi) {
+        with(binding) {
+            value.text = factUi.description
+            value.textSize = factUi.descriptionSize
+            category.text = factUi.category
+            sharedButton.setOnClickListener {
+                onClickFact.invoke(factUi)
+            }
         }
-
-        category.text = fact.getCategory()
     }
 
-    fun setOnClickListener(fact: Fact, onClickListener: OnClickFactListener) {
-        sharedButton.setOnClickListener {
-            onClickListener.sharedFact(fact)
+    companion object {
+        fun generate(parent: ViewGroup, onClickFact: (FactUi) -> Unit): FactHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = AdapterFactBinding.inflate(inflater, parent, false)
+            return FactHolder(binding, onClickFact)
         }
     }
 }

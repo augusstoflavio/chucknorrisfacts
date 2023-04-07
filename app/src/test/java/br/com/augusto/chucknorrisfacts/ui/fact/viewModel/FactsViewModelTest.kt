@@ -17,10 +17,9 @@ import org.junit.Rule
 import org.junit.Test
 import java.lang.Exception
 
-
 class FactRepositoryFake : FactRepository {
     var searchFactsResult: Result<List<Fact>> = Result.Success(
-        listOf()
+        listOf(),
     )
     var searchFactsWasCalled = false
     override suspend fun searchFacts(query: String): Result<List<Fact>> {
@@ -43,7 +42,7 @@ class FactsViewModelTest {
     private fun setupViewModel() {
         factRepository = FactRepositoryFake()
         factsViewModel = FactsViewModel(
-            SearchFactsUseCase(factRepository)
+            SearchFactsUseCase(factRepository),
         )
     }
 
@@ -125,7 +124,7 @@ class FactsViewModelTest {
         setupViewModel()
 
         factRepository.searchFactsResult = Result.Success(
-            listOf()
+            listOf(),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
@@ -140,7 +139,7 @@ class FactsViewModelTest {
         setupViewModel()
 
         factRepository.searchFactsResult = Result.Error(
-            Exception()
+            Exception(),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
@@ -155,7 +154,7 @@ class FactsViewModelTest {
         setupViewModel()
 
         val error = Result.Error(
-            Exception()
+            Exception(),
         )
         factRepository.searchFactsResult = error
 
@@ -166,8 +165,8 @@ class FactsViewModelTest {
         Truth.assertThat(uiError).isEqualTo(
             FactsUiError(
                 tryAgainUiEvent = FactsUiEvent.OnClickTryAgainSearchFacts,
-                error = error
-            )
+                error = error,
+            ),
         )
     }
 
@@ -177,8 +176,8 @@ class FactsViewModelTest {
 
         factRepository.searchFactsResult = Result.Success(
             listOf(
-                FactBuilder.buildModel()
-            )
+                FactBuilder.buildModel(),
+            ),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
@@ -187,8 +186,8 @@ class FactsViewModelTest {
 
         Truth.assertThat(uiState?.facts).isEqualTo(
             listOf(
-                FactBuilder.buildUi()
-            )
+                FactBuilder.buildUi(),
+            ),
         )
     }
 
@@ -198,8 +197,8 @@ class FactsViewModelTest {
 
         factRepository.searchFactsResult = Result.Success(
             listOf(
-                FactBuilder.buildModel()
-            )
+                FactBuilder.buildModel(),
+            ),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
@@ -214,7 +213,7 @@ class FactsViewModelTest {
         setupViewModel()
 
         factRepository.searchFactsResult = Result.Success(
-            listOf()
+            listOf(),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
@@ -229,14 +228,14 @@ class FactsViewModelTest {
         setupViewModel()
 
         factRepository.searchFactsResult = Result.Success(
-            listOf()
+            listOf(),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
 
         val uiState = factsViewModel.uiState.getTestValue()
 
-        Truth.assertThat(uiState?.showMessageNoFactForSearch).isTrue()
+        Truth.assertThat(uiState?.showMessageNoFactFound).isTrue()
     }
 
     @Test
@@ -245,15 +244,15 @@ class FactsViewModelTest {
 
         factRepository.searchFactsResult = Result.Success(
             listOf(
-                FactBuilder.buildModel()
-            )
+                FactBuilder.buildModel(),
+            ),
         )
 
         factsViewModel.onNewUiEvent(FactsUiEvent.OnReceiveSearch("search"))
 
         val uiState = factsViewModel.uiState.getTestValue()
 
-        Truth.assertThat(uiState?.showMessageNoFactForSearch).isFalse()
+        Truth.assertThat(uiState?.showMessageNoFactFound).isFalse()
     }
 
     @Test
@@ -265,7 +264,7 @@ class FactsViewModelTest {
         val uiSideEffect = factsViewModel.uiSideEffect.getTestValue()
 
         Truth.assertThat(uiSideEffect).isEqualTo(
-            FactsUiSideEffect.Open.FactSharedDialog(FactBuilder.buildUi())
+            FactsUiSideEffect.Open.FactSharedDialog(FactBuilder.buildUi()),
         )
     }
 }

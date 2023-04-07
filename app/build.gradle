@@ -29,6 +29,10 @@ android {
         sourceCompatibility "1.8"
     }
     namespace 'br.com.augusto.chucknorrisfacts'
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {

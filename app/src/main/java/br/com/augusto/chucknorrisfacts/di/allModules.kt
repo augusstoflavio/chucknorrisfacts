@@ -1,6 +1,7 @@
 package br.com.augusto.chucknorrisfacts.di
 
-import br.com.augusto.chucknorrisfacts.data.di.dataModule
+import br.com.augusto.chucknorrisfacts.data.di.dataModules
 import br.com.augusto.chucknorrisfacts.domain.di.domainModules
+import br.com.augusto.chucknorrisfacts.ui.di.uiModule
 
-val allModules = domainModules + dataModule
+val allModules = domainModules + dataModules + uiModule
