@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.databinding.FragmentFactsBinding
+import br.com.augusto.chucknorrisfacts.ui.extensions.shareText
 import br.com.augusto.chucknorrisfacts.ui.fact.adapter.FactAdapter
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
@@ -16,6 +17,7 @@ import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactUi
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactsUiState
 import br.com.augusto.chucknorrisfacts.ui.fact.viewModel.FactsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class FactsFragment : Fragment() {
 
@@ -86,25 +88,29 @@ class FactsFragment : Fragment() {
 
     private fun handleSideEffect(factsUiSideEffect: FactsUiSideEffect?) {
         when (factsUiSideEffect) {
-            is FactsUiSideEffect.Open.FactSharedDialog -> openFactSharedDialog()
+            is FactsUiSideEffect.Open.FactSharedDialog -> {
+                openFactSharedDialog(factsUiSideEffect.factUi)
+            }
             FactsUiSideEffect.NavigateTo.SearchScreen -> navigateToSearchScreen()
             null -> {}
         }
     }
 
-    private fun openFactSharedDialog() {
-        Toast.makeText(requireContext(), "Abrir compartilhamento", Toast.LENGTH_SHORT).show()
+    private fun openFactSharedDialog(factUi: FactUi) {
+        shareText(factUi.url, getString(R.string.share_fact_url))
     }
 
     private fun navigateToSearchScreen() {
         factsViewModel.onNewUiEvent(
-            FactsUiEvent.OnReceiveSearch(search = "Norris")
+            FactsUiEvent.OnReceiveSearch(search = "Norris"),
         )
         Toast.makeText(requireContext(), "Navegar para tela de busca", Toast.LENGTH_SHORT).show()
     }
 
     private fun onClickFact(factUi: FactUi) {
-        Toast.makeText(requireContext(), "Clique no fato", Toast.LENGTH_SHORT).show()
+        factsViewModel.onNewUiEvent(
+            FactsUiEvent.OnClickToShareFact(factUi),
+        )
     }
 
     override fun onDestroyView() {
