@@ -1,15 +1,16 @@
 package br.com.augusto.chucknorrisfacts.ui.fact.viewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import br.com.augusto.chucknorrisfacts.builder.FactBuilder
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Fact
 import br.com.augusto.chucknorrisfacts.domain.repository.FactRepository
 import br.com.augusto.chucknorrisfacts.domain.useCase.SearchFactsUseCase
 import br.com.augusto.chucknorrisfacts.ui.fact.extensions.getTestValue
+import br.com.augusto.chucknorrisfacts.ui.fact.mapper.FactUiMapperImpl
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.FactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
-import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactBuilder
 import br.com.augusto.chucknorrisfacts.ui.fact.util.MainCoroutineRule
 import com.google.common.truth.Truth
 import kotlinx.coroutines.test.pauseDispatcher
@@ -42,7 +43,8 @@ class FactsViewModelTest {
     private fun setupViewModel() {
         factRepository = FactRepositoryFake()
         factsViewModel = FactsViewModel(
-            SearchFactsUseCase(factRepository),
+            searchFactsUseCase = SearchFactsUseCase(factRepository),
+            factUiMapper = FactUiMapperImpl(),
         )
     }
 
