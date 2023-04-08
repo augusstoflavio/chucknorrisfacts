@@ -18,7 +18,6 @@ import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactsUiState
 import br.com.augusto.chucknorrisfacts.ui.fact.viewModel.FactsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class FactsFragment : Fragment() {
 
     private var _binding: FragmentFactsBinding? = null
