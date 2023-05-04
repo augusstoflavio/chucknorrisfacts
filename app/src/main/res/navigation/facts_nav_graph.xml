@@ -9,5 +9,16 @@
         android:id="@+id/factFragment"
         android:name="br.com.augusto.chucknorrisfacts.ui.fact.fragment.FactsFragment"
         android:label="FactFragment"
-        tools:layout="@layout/fragment_facts"/>
+        tools:layout="@layout/fragment_facts">
+        <action
+            android:id="@+id/toSearchFactsFragment"
+            app:destination="@id/searchFactsFragment"
+            app:enterAnim="@anim/slide_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFactsFragment"
+        android:name="br.com.augusto.chucknorrisfacts.ui.fact.fragment.SearchFactsFragment"
+        android:label="SearchFactsFragment"
+        tools:layout="@layout/fragment_search_facts"/>
 </navigation>

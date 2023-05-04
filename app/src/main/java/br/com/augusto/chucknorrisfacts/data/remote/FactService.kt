@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface FactService {
 
     @GET("jokes/categories")
-    fun categories(): Response<List<String>>
+    suspend fun categories(): Response<List<String>>
 
     @GET("jokes/search")
     suspend fun searchFacts(@Query("query") query: String): Response<SearchResponse>

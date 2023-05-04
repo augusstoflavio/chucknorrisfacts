@@ -1,24 +1,28 @@
 package br.com.augusto.chucknorrisfacts.ui.fact.adapter
 
-import android.view.View
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.domain.model.Category
+import br.com.augusto.chucknorrisfacts.databinding.AdapterCategoryBinding
+import br.com.augusto.chucknorrisfacts.ui.fact.uiState.CategoryUi
 
-class CategoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private var categoryText: TextView = itemView.findViewById(R.id.category)
+class CategoryHolder(
+    private val binding: AdapterCategoryBinding,
+    private val onClickCategory: (CategoryUi) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
-    fun setCategory(category: Category) {
-        categoryText.text = category.name
+    fun bind(category: CategoryUi) {
+        binding.category.text = category.name
+        binding.root.setOnClickListener {
+            onClickCategory.invoke(category)
+        }
     }
 
-    fun setOnClickCategotyListener(
-        category: Category,
-        onClickCategoryListener: OnClickCategoryListener
-    ) {
-        itemView.setOnClickListener {
-            onClickCategoryListener.onClick(category)
+    companion object {
+        fun generate(parent: ViewGroup, onClickCategory: (CategoryUi) -> Unit): CategoryHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = AdapterCategoryBinding.inflate(inflater, parent, false)
+            return CategoryHolder(binding, onClickCategory)
         }
     }
 }

@@ -1,24 +1,28 @@
 package br.com.augusto.chucknorrisfacts.ui.fact.adapter
 
-import android.view.View
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.domain.model.Search
+import br.com.augusto.chucknorrisfacts.databinding.AdapterSearchBinding
+import br.com.augusto.chucknorrisfacts.ui.fact.uiState.SearchUi
 
-class SearchHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private var searchText: TextView = itemView.findViewById(R.id.search)
+class SearchHolder(
+    private val binding: AdapterSearchBinding,
+    private val onClickSearch: (SearchUi) -> Unit,
+) : RecyclerView.ViewHolder(binding.root) {
 
-    fun setSearch(search: Search) {
-        searchText.text = search.name
+    fun bind(search: SearchUi) {
+        binding.search.text = search.name
+        binding.root.setOnClickListener {
+            onClickSearch.invoke(search)
+        }
     }
 
-    fun setOnClickSearchListener(
-        search: Search,
-        onClickSearchListener: OnClickSearchListener
-    ) {
-        itemView.setOnClickListener {
-            onClickSearchListener.onClick(search)
+    companion object {
+        fun generate(parent: ViewGroup, onClickSearch: (SearchUi) -> Unit): SearchHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = AdapterSearchBinding.inflate(inflater, parent, false)
+            return SearchHolder(binding, onClickSearch)
         }
     }
 }
