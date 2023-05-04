@@ -11,8 +11,10 @@ import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.databinding.FragmentFactsBinding
 import br.com.augusto.chucknorrisfacts.ui.extensions.getNavigationResult
 import br.com.augusto.chucknorrisfacts.ui.extensions.shareText
+import br.com.augusto.chucknorrisfacts.ui.extensions.showError
 import br.com.augusto.chucknorrisfacts.ui.fact.adapter.FactAdapter
 import br.com.augusto.chucknorrisfacts.ui.fact.fragment.SearchFactsFragment.Companion.SEARCH_FACTS_RESULT_KEY
+import br.com.augusto.chucknorrisfacts.ui.fact.uiError.FactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactUi
@@ -68,11 +70,21 @@ class FactsFragment : Fragment() {
 
     private fun setupObservables() {
         factsViewModel.uiState.observe(viewLifecycleOwner) {
-            updateUi(it)
+            it?.let {
+                updateUi(it)
+            }
         }
 
         factsViewModel.uiSideEffect.observe(viewLifecycleOwner) {
-            handleSideEffect(it)
+            it?.let {
+                handleSideEffect(it)
+            }
+        }
+
+        factsViewModel.uiError.observe(viewLifecycleOwner) {
+            it?.let {
+                handleError(it)
+            }
         }
 
         getNavigationResult<String>(SEARCH_FACTS_RESULT_KEY)?.observe(viewLifecycleOwner) {
@@ -95,14 +107,17 @@ class FactsFragment : Fragment() {
         }
     }
 
-    private fun handleSideEffect(factsUiSideEffect: FactsUiSideEffect?) {
+    private fun handleSideEffect(factsUiSideEffect: FactsUiSideEffect) {
         when (factsUiSideEffect) {
             is FactsUiSideEffect.Open.FactSharedDialog -> {
                 openFactSharedDialog(factsUiSideEffect.factUi)
             }
             FactsUiSideEffect.NavigateTo.SearchScreen -> navigateToSearchScreen()
-            null -> {}
         }
+    }
+
+    private fun handleError(uiError: FactsUiError) {
+        showError(uiError.error)
     }
 
     private fun openFactSharedDialog(factUi: FactUi) {

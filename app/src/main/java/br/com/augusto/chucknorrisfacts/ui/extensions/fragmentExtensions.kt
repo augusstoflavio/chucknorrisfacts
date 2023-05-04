@@ -1,9 +1,11 @@
 package br.com.augusto.chucknorrisfacts.ui.extensions
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import br.com.augusto.chucknorrisfacts.domain.Result
 
 fun Fragment.shareText(text: String, title: String) {
     val shareIntent = Intent(Intent.ACTION_SEND)
@@ -27,4 +29,8 @@ fun <T> Fragment.getNavigationResult(key: String): MutableLiveData<T>? {
 
 fun Fragment.navigateUp() {
     findNavController().navigateUp()
+}
+
+fun Fragment.showError(error: Result.Error) {
+    Toast.makeText(requireContext(), error.data.message, Toast.LENGTH_SHORT).show()
 }

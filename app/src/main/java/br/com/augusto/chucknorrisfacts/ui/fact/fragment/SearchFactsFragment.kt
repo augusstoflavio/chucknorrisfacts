@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.augusto.chucknorrisfacts.databinding.FragmentSearchFactsBinding
 import br.com.augusto.chucknorrisfacts.ui.extensions.navigateUp
 import br.com.augusto.chucknorrisfacts.ui.extensions.setNavigationResult
+import br.com.augusto.chucknorrisfacts.ui.extensions.showError
 import br.com.augusto.chucknorrisfacts.ui.fact.adapter.CategoryAdapter
 import br.com.augusto.chucknorrisfacts.ui.fact.adapter.SearchAdapter
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.SearchFactsUiError
@@ -106,7 +106,7 @@ class SearchFactsFragment : Fragment() {
     }
 
     private fun handleError(uiError: SearchFactsUiError) {
-        Toast.makeText(requireContext(), uiError.error.data.message, Toast.LENGTH_LONG).show()
+        showError(uiError.error)
     }
 
     private fun handleSideEffect(uiSideEffect: SearchFactsUiSideEffect) {
