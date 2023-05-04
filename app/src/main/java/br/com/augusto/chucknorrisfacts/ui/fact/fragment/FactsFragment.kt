@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import br.com.augusto.chucknorrisfacts.R
 import br.com.augusto.chucknorrisfacts.databinding.FragmentFactsBinding
+import br.com.augusto.chucknorrisfacts.ui.extensions.getNavigationResult
 import br.com.augusto.chucknorrisfacts.ui.extensions.shareText
 import br.com.augusto.chucknorrisfacts.ui.fact.adapter.FactAdapter
+import br.com.augusto.chucknorrisfacts.ui.fact.fragment.SearchFactsFragment.Companion.SEARCH_FACTS_RESULT_KEY
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.FactUi
@@ -72,6 +74,14 @@ class FactsFragment : Fragment() {
         factsViewModel.uiSideEffect.observe(viewLifecycleOwner) {
             handleSideEffect(it)
         }
+
+        getNavigationResult<String>(SEARCH_FACTS_RESULT_KEY)?.observe(viewLifecycleOwner) {
+            factsViewModel.onNewUiEvent(
+                FactsUiEvent.OnReceiveSearch(
+                    search = it,
+                ),
+            )
+        }
     }
 
     private fun updateUi(factsUiState: FactsUiState) {
@@ -100,10 +110,9 @@ class FactsFragment : Fragment() {
     }
 
     private fun navigateToSearchScreen() {
-        factsViewModel.onNewUiEvent(
-            FactsUiEvent.OnReceiveSearch(search = "Norris"),
+        findNavController().navigate(
+            FactsFragmentDirections.toSearchFactsFragment(),
         )
-        Toast.makeText(requireContext(), "Navegar para tela de busca", Toast.LENGTH_SHORT).show()
     }
 
     private fun onClickFact(factUi: FactUi) {

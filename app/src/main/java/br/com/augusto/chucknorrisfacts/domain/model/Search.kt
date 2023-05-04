@@ -1,11 +1,5 @@
 package br.com.augusto.chucknorrisfacts.domain.model
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
-import java.util.*
-
-open class Search : RealmObject() {
-    @PrimaryKey
-    var name: String? = null
-    var date: Date? = null
-}
+data class Search(
+    val name: String
+)

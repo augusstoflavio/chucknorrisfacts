@@ -1,29 +1,29 @@
 package br.com.augusto.chucknorrisfacts.ui.fact.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.domain.model.Category
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import br.com.augusto.chucknorrisfacts.ui.fact.uiState.CategoryUi
 
 class CategoryAdapter(
-    val categories: List<Category>,
-    private val onClickCategoryListener: OnClickCategoryListener
-) : RecyclerView.Adapter<CategoryHolder>() {
+    private val onClickCategory: (CategoryUi) -> Unit,
+) : ListAdapter<CategoryUi, CategoryHolder>(CategoryDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.adapter_category, parent, false)
-        return CategoryHolder(v)
+        return CategoryHolder.generate(parent, onClickCategory)
     }
 
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
-        val category = this.categories[position]
-        holder.setCategory(category)
-        holder.setOnClickCategotyListener(category, onClickCategoryListener)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return categories.size
+    class CategoryDiffCallBack : DiffUtil.ItemCallback<CategoryUi>() {
+        override fun areItemsTheSame(oldItem: CategoryUi, newItem: CategoryUi): Boolean {
+            return oldItem.name == newItem.name
+        }
+
+        override fun areContentsTheSame(oldItem: CategoryUi, newItem: CategoryUi): Boolean {
+            return oldItem == newItem
+        }
     }
 }
