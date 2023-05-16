@@ -13,6 +13,8 @@ val repositoryModule = module {
     }
 
     single<SearchRepository> {
-        SearchRepositoryImpl()
+        SearchRepositoryImpl(
+            chuckNorrisFactsDatabase = get(),
+        )
     }
 }
