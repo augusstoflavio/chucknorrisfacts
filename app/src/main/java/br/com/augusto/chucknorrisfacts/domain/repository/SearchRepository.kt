@@ -5,4 +5,5 @@ import br.com.augusto.chucknorrisfacts.domain.model.Search
 
 interface SearchRepository {
     fun getLatestSearches(amount: Long): Result<List<Search>>
+    suspend fun saveSearch(search: String)
 }

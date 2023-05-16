@@ -15,6 +15,6 @@ val useCaseModule = module {
     }
 
     factory {
-        SearchFactsUseCase(get())
+        SearchFactsUseCase(get(), get())
     }
 }
