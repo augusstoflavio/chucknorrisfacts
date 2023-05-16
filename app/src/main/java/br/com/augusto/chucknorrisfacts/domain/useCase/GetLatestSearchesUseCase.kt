@@ -6,7 +6,7 @@ import br.com.augusto.chucknorrisfacts.domain.repository.SearchRepository
 
 class GetLatestSearchesUseCase(private val searchRepository: SearchRepository) {
 
-    operator fun invoke(): Result<List<Search>> {
+    suspend operator fun invoke(): Result<List<Search>> {
         return searchRepository.getLatestSearches(10)
     }
 }
