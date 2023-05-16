@@ -10,8 +10,23 @@ import java.time.LocalDateTime
 class SearchDataSourceImpl(
     private val chuckNorrisFactsDatabase: ChuckNorrisFactsDatabase,
 ) : SearchDataSource {
-    override suspend fun getLatestSearches(amount: Long): Result<List<Search>> {
-        return Result.Success(listOf())
+    override suspend fun getLatestSearches(amount: Int): Result<List<Search>> {
+        return try {
+            val searches = chuckNorrisFactsDatabase.getSearchDao().get(
+                amount,
+            )
+            Result.Success(
+                searches.map {
+                    Search(
+                        name = it.name,
+                    )
+                },
+            )
+        } catch (e: Exception) {
+            Result.Error(
+                e,
+            )
+        }
     }
 
     override suspend fun saveSearch(search: Search): Result<Unit> {

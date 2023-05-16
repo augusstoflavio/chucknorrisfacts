@@ -60,7 +60,7 @@ class SearchFactsViewModel(
     }
 
     private fun handleOnInitScreen() {
-        //loadLastSearches()
+        loadLastSearches()
         loadCategories()
     }
 
@@ -81,7 +81,7 @@ class SearchFactsViewModel(
         _uiState.value = _uiState.value?.copy(
             lastSearches = data.map {
                 SearchUi(
-                    name = it.name ?: "",
+                    name = it.name,
                 )
             },
         )

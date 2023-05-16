@@ -10,8 +10,8 @@ class SearchRepositoryImpl(
     private val searchDataSource: SearchDataSource,
 ) : SearchRepository {
 
-    override fun getLatestSearches(amount: Long): Result<List<Search>> {
-        return Result.Success(listOf())
+    override suspend fun getLatestSearches(amount: Int): Result<List<Search>> {
+        return searchDataSource.getLatestSearches(amount)
     }
 
     override suspend fun saveSearch(search: Search): Result<Unit> {

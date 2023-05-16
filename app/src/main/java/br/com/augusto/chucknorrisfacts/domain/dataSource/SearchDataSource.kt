@@ -5,6 +5,6 @@ import br.com.augusto.chucknorrisfacts.domain.model.Search
 
 interface SearchDataSource {
 
-    suspend fun getLatestSearches(amount: Long): Result<List<Search>>
+    suspend fun getLatestSearches(amount: Int): Result<List<Search>>
     suspend fun saveSearch(search: Search): Result<Unit>
 }
