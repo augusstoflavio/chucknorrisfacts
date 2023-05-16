@@ -14,7 +14,7 @@ val repositoryModule = module {
 
     single<SearchRepository> {
         SearchRepositoryImpl(
-            chuckNorrisFactsDatabase = get(),
+            searchDataSource = get(),
         )
     }
 }
