@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Chuck Norris Facts</string>
-    <string name="filter">Filtrar</string>
+    <string name="filter">Filter</string>
     <string name="hint_search_fact">Enter your search term</string>
     <string name="suggestions">Suggestions</string>
     <string name="past_searchs">Past Searchs</string>
     <string name="uncategorized">Uncategorized</string>
     <string name="share_fact_url">Compartilhe o fato do url</string>
     <string name="search_facts">Search facts</string>
+    <string name="ok">Ok</string>
+    <string name="try_again">Try again</string>
+    <string name="api_error_title">Oops!</string>
+    <string name="api_error_message">Oops! Something went wrong while fetching data. Please try again later.</string>
+    <string name="internal_error_title">Oops!</string>
+    <string name="internal_error_message">Oops! Something unexpected happened on our end. We apologize for the inconvenience. Please try again later.</string>
+    <string name="no_connection_error_title">No Internet Connection</string>
+    <string name="no_connection_error_message">It seems that you are not connected to the internet. Please check your network connection and try again.</string>
 </resources>
