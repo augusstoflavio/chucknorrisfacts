@@ -98,9 +98,11 @@ class SearchFactsViewModel(
         isLoadingCategories = true
 
         viewModelScope.launch {
-            when (val result = getCategoriesUseCase()) {
-                is Result.Success -> onLoadCategoriesSuccessfully(result.data)
-                is Result.Error -> onLoadCategoriesWithError(result)
+            getCategoriesUseCase().collect { result ->
+                when (result) {
+                    is Result.Success -> onLoadCategoriesSuccessfully(result.data)
+                    is Result.Error -> onLoadCategoriesWithError(result)
+                }
             }
 
             isLoadingCategories = false

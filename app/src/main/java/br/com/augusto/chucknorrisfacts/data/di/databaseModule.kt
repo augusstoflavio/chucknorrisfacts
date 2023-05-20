@@ -13,4 +13,12 @@ val dataBaseModule = module {
             "chuck-norris-facts",
         ).build()
     }
+
+    single {
+        get<ChuckNorrisFactsDatabase>().getSearchDao()
+    }
+
+    single {
+        get<ChuckNorrisFactsDatabase>().getCategoryDao()
+    }
 }
