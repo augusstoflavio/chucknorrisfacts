@@ -117,7 +117,9 @@ class FactsFragment : Fragment() {
     }
 
     private fun handleError(uiError: FactsUiError) {
-        showError(uiError.error)
+        showError(uiError.error) {
+            factsViewModel.onNewUiEvent(uiError.tryAgainUiEvent)
+        }
     }
 
     private fun openFactSharedDialog(factUi: FactUi) {

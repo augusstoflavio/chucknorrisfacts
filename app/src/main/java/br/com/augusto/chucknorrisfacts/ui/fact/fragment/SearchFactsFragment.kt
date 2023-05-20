@@ -106,7 +106,9 @@ class SearchFactsFragment : Fragment() {
     }
 
     private fun handleError(uiError: SearchFactsUiError) {
-        showError(uiError.error)
+        showError(uiError.error) {
+            searchFactsViewModel.onNewUiEvent(uiError.tryAgainUiEvent)
+        }
     }
 
     private fun handleSideEffect(uiSideEffect: SearchFactsUiSideEffect) {

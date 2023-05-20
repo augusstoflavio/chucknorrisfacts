@@ -5,7 +5,7 @@ import br.com.augusto.chucknorrisfacts.data.remote.exception.NoConnectivityExcep
 import br.com.augusto.chucknorrisfacts.domain.Result
 
 suspend fun <T : Any> safeCall(
-    call: suspend () -> T
+    call: suspend () -> T,
 ): Result<T> {
     return try {
         Result.Success(call.invoke())
