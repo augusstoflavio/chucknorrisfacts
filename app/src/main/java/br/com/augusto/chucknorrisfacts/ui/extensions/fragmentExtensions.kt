@@ -32,5 +32,5 @@ fun Fragment.navigateUp() {
 }
 
 fun Fragment.showError(error: Result.Error) {
-    Toast.makeText(requireContext(), error.data.message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(requireContext(), "mensagem de erro", Toast.LENGTH_SHORT).show()
 }
