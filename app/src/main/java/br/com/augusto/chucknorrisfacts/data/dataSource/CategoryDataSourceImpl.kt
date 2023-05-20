@@ -1,7 +1,8 @@
 package br.com.augusto.chucknorrisfacts.data.dataSource
 
+import br.com.augusto.chucknorrisfacts.data.extension.toCategory
+import br.com.augusto.chucknorrisfacts.data.extension.toCategoryEntity
 import br.com.augusto.chucknorrisfacts.data.local.dao.CategoryDao
-import br.com.augusto.chucknorrisfacts.data.local.entity.CategoryEntity
 import br.com.augusto.chucknorrisfacts.data.remote.FactService
 import br.com.augusto.chucknorrisfacts.data.util.safeCall
 import br.com.augusto.chucknorrisfacts.domain.Result
@@ -28,9 +29,7 @@ class CategoryDataSourceImpl(
         return safeCall {
             val categories = categoryDao.getAll()
             categories.map {
-                Category(
-                    name = it.name,
-                )
+                it.toCategory()
             }
         }
     }
@@ -39,9 +38,7 @@ class CategoryDataSourceImpl(
         safeCall {
             categoryDao.insert(
                 categories.map {
-                    CategoryEntity(
-                        name = it.name,
-                    )
+                    it.toCategoryEntity()
                 },
             )
         }
