@@ -1,8 +1,9 @@
-package br.com.augusto.chucknorrisfacts.data.local.dataSource
+package br.com.augusto.chucknorrisfacts.data.dataSource
 
 import br.com.augusto.chucknorrisfacts.data.local.dao.CategoryDao
 import br.com.augusto.chucknorrisfacts.data.local.entity.CategoryEntity
 import br.com.augusto.chucknorrisfacts.data.remote.FactService
+import br.com.augusto.chucknorrisfacts.data.util.safeCall
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.dataSource.CategoryDataSource
 import br.com.augusto.chucknorrisfacts.domain.model.Category
@@ -13,50 +14,35 @@ class CategoryDataSourceImpl(
 ) : CategoryDataSource {
 
     override suspend fun getNewCategories(): Result<List<Category>> {
-        return try {
+        return safeCall {
             val response = factService.categories()
-            Result.Success(
-                response.body()?.map {
-                    Category(
-                        name = it,
-                    )
-                } ?: listOf(),
-            )
-        } catch (e: Exception) {
-            Result.Error(e)
+            response.body()?.map {
+                Category(
+                    name = it,
+                )
+            } ?: listOf()
         }
     }
 
     override suspend fun getSavedCategories(): Result<List<Category>> {
-        return try {
+        return safeCall {
             val categories = categoryDao.getAll()
-            Result.Success(
-                categories.map {
-                    Category(
-                        name = it.name,
-                    )
-                },
-            )
-        } catch (e: Exception) {
-            Result.Error(
-                e,
-            )
+            categories.map {
+                Category(
+                    name = it.name,
+                )
+            }
         }
     }
 
     override suspend fun saveCategories(categories: List<Category>) {
-        try {
+        safeCall {
             categoryDao.insert(
                 categories.map {
                     CategoryEntity(
                         name = it.name,
                     )
                 },
-            )
-            Result.Success(Unit)
-        } catch (e: Exception) {
-            Result.Error(
-                e,
             )
         }
     }
