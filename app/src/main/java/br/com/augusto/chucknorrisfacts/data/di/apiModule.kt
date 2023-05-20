@@ -3,6 +3,7 @@ package br.com.augusto.chucknorrisfacts.data.di
 import android.content.Context
 import android.net.ConnectivityManager
 import br.com.augusto.chucknorrisfacts.data.remote.FactService
+import br.com.augusto.chucknorrisfacts.data.remote.interceptor.ErrorInterceptor
 import br.com.augusto.chucknorrisfacts.data.remote.interceptor.NoConnectivityInterceptor
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -16,6 +17,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val apiModule = module {
 
     val loggingInterceptorName = named("loggingInterceptor")
+    val errorInterceptorName = named("errorInterceptor")
     val noConnectivityInterceptorName = named("noConnectivityInterceptor")
     val httpClientName = named("httpClient")
     val retrofitName = named("retrofit")
@@ -24,6 +26,10 @@ val apiModule = module {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         logging
+    }
+
+    factory(errorInterceptorName) {
+        ErrorInterceptor()
     }
 
     factory(noConnectivityInterceptorName) {
@@ -37,9 +43,11 @@ val apiModule = module {
     factory(httpClientName) {
         val loggingInterceptor = get<HttpLoggingInterceptor>(loggingInterceptorName)
         val noConnectivityInterceptor = get<NoConnectivityInterceptor>(noConnectivityInterceptorName)
+        val errorInterceptor = get<ErrorInterceptor>(errorInterceptorName)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(noConnectivityInterceptor)
+            .addInterceptor(errorInterceptor)
             .build()
     }
 
