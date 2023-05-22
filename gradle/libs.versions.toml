@@ -1,4 +1,6 @@
 [versions]
+gradle = "7.3.1"
+kotlinGradle = "1.7.20"
 recyclerview = "1.2.1"
 cardview = "1.0.0"
 coreKtx = "1.9.0"
@@ -14,6 +16,9 @@ material = "1.8.0"
 
 [libraries]
 
+gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradle" }
+
 #google
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
@@ -26,6 +31,7 @@ androidx-constraintLayout = { group = "androidx.constraintlayout", name = "const
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 androidx-navigation-dynamicFeaturesFragment = { group = "androidx.navigation", name = "navigation-dynamic-features-fragment", version.ref = "navigation" }
+androidx-navigation-safeArgs = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
