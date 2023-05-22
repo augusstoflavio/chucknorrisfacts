@@ -8,8 +8,8 @@ import br.com.augusto.chucknorrisfacts.data.local.entity.CategoryEntity
 
 @Dao
 interface CategoryDao {
-    @Query("SELECT * FROM Category")
-    suspend fun getAll(): List<CategoryEntity>
+    @Query("SELECT * FROM Category ORDER BY RANDOM() LIMIT :amount")
+    suspend fun getAll(amount: Int): List<CategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(categories: List<CategoryEntity>)

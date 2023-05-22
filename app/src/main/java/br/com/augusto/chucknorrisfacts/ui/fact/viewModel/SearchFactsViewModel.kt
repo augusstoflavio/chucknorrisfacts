@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class SearchFactsViewModel(
     private val getLatestSearchesUseCase: GetLatestSearchesUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val initialUiState: SearchFactsUiState = SearchFactsUiState()
+    private val initialUiState: SearchFactsUiState = SearchFactsUiState(),
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(initialUiState)
@@ -98,11 +98,9 @@ class SearchFactsViewModel(
         isLoadingCategories = true
 
         viewModelScope.launch {
-            getCategoriesUseCase().collect { result ->
-                when (result) {
-                    is Result.Success -> onLoadCategoriesSuccessfully(result.data)
-                    is Result.Error -> onLoadCategoriesWithError(result)
-                }
+            when (val result = getCategoriesUseCase.invoke(8)) {
+                is Result.Success -> onLoadCategoriesSuccessfully(result.data)
+                is Result.Error -> onLoadCategoriesWithError(result)
             }
 
             isLoadingCategories = false

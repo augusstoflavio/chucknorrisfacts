@@ -25,9 +25,9 @@ class CategoryDataSourceImpl(
         }
     }
 
-    override suspend fun getSavedCategories(): Result<List<Category>> {
+    override suspend fun getSavedCategories(amount: Int): Result<List<Category>> {
         return safeCall {
-            val categories = categoryDao.getAll()
+            val categories = categoryDao.getAll(amount)
             categories.map {
                 it.toCategory()
             }
