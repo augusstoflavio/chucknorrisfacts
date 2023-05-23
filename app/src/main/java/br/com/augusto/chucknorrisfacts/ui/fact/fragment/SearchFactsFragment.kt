@@ -21,6 +21,9 @@ import br.com.augusto.chucknorrisfacts.ui.fact.uiState.CategoryUi
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.SearchFactsUiState
 import br.com.augusto.chucknorrisfacts.ui.fact.uiState.SearchUi
 import br.com.augusto.chucknorrisfacts.ui.fact.viewModel.SearchFactsViewModel
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFactsFragment : Fragment() {
@@ -71,7 +74,10 @@ class SearchFactsFragment : Fragment() {
 
     private fun setupLists() {
         with(binding) {
-            suggestions.layoutManager = GridLayoutManager(requireContext(), 3)
+            suggestions.layoutManager = FlexboxLayoutManager(requireContext()).apply {
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.SPACE_EVENLY
+            }
             suggestions.adapter = categoriesAdapter
             lastSearchs.adapter = searchAdapter
         }
