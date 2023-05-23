@@ -117,7 +117,7 @@ class FactsFragment : Fragment() {
     }
 
     private fun handleError(uiError: FactsUiError) {
-        showError(uiError.error) {
+        requireContext().showError(uiError.error) {
             factsViewModel.onNewUiEvent(uiError.tryAgainUiEvent)
         }
     }
