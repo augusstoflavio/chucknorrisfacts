@@ -4,6 +4,6 @@ import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Category
 
 interface CategoryRepository {
-    suspend fun getCategories(amount: Int): Result<List<Category>>
+    suspend fun getRandomCategories(amount: Int): Result<List<Category>>
     suspend fun syncCategories(): Result<List<Category>>
 }

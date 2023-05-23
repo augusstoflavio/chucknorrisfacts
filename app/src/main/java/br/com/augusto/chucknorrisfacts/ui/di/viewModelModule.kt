@@ -17,7 +17,7 @@ val viewModelModule = module {
     viewModel {
         SearchFactsViewModel(
             getLatestSearchesUseCase = get(),
-            getCategoriesUseCase = get(),
+            getRandomCategoriesUseCase = get(),
         )
     }
 

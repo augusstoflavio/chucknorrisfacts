@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Category
 import br.com.augusto.chucknorrisfacts.domain.model.Search
-import br.com.augusto.chucknorrisfacts.domain.useCase.GetCategoriesUseCase
+import br.com.augusto.chucknorrisfacts.domain.useCase.GetRandomCategoriesUseCase
 import br.com.augusto.chucknorrisfacts.domain.useCase.GetLatestSearchesUseCase
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.SearchFactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.SearchFactsUiEvent
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class SearchFactsViewModel(
     private val getLatestSearchesUseCase: GetLatestSearchesUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getRandomCategoriesUseCase: GetRandomCategoriesUseCase,
     private val initialUiState: SearchFactsUiState = SearchFactsUiState(),
 ) : ViewModel() {
 
@@ -98,7 +98,7 @@ class SearchFactsViewModel(
         isLoadingCategories = true
 
         viewModelScope.launch {
-            when (val result = getCategoriesUseCase.invoke(8)) {
+            when (val result = getRandomCategoriesUseCase.invoke(8)) {
                 is Result.Success -> onLoadCategoriesSuccessfully(result.data)
                 is Result.Error -> onLoadCategoriesWithError(result)
             }
