@@ -10,4 +10,14 @@ class CategoryRepositoryImpl(
     override suspend fun getCategories(amount: Int): Result<List<Category>> {
         return categoryDataSource.getSavedCategories(amount)
     }
+
+    override suspend fun syncCategories(): Result<List<Category>> {
+        val newCategoriesResult = categoryDataSource.getNewCategories()
+        if (newCategoriesResult !is Result.Success) {
+            return newCategoriesResult
+        }
+
+        categoryDataSource.saveCategories(newCategoriesResult.data)
+        return newCategoriesResult
+    }
 }
