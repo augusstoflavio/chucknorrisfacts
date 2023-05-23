@@ -9,7 +9,10 @@ val repositoryModule = module {
     }
 
     single<CategoryRepository> {
-        CategoryRepositoryImpl(get())
+        CategoryRepositoryImpl(
+            localCategoryDataSource = get(),
+            remoteCategoryDataSource = get(),
+        )
     }
 
     single<SearchRepository> {
