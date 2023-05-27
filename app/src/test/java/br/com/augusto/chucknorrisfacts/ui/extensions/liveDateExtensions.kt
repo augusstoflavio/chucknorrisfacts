@@ -1,4 +1,4 @@
-package br.com.augusto.chucknorrisfacts.ui.fact.extensions
+package br.com.augusto.chucknorrisfacts.ui.extensions
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
@@ -7,7 +7,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-fun <T> LiveData<T>.getTestValue(): T? {
+fun <T> LiveData<T>.awaitValue(): T? {
     var value: T? = null
     val latch = CountDownLatch(1)
 
@@ -15,7 +15,7 @@ fun <T> LiveData<T>.getTestValue(): T? {
         override fun onChanged(t: T) {
             value = t
             latch.countDown()
-            this@getTestValue.removeObserver(this)
+            this@awaitValue.removeObserver(this)
         }
     }
 

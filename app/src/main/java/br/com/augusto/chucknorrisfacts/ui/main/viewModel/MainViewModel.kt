@@ -11,7 +11,7 @@ import br.com.augusto.chucknorrisfacts.ui.utils.SingleEventLiveData
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val syncCategoriesUseCase: SyncCategoriesUseCase,
+    private val syncCategoriesUseCase: SyncCategoriesUseCase
 ) : ViewModel() {
 
     private val _uiError = SingleEventLiveData<MainUiError>()

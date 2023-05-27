@@ -65,4 +65,10 @@ dependencies {
     implementation libs.retrofit
     implementation libs.moshi
     implementation libs.loggingInterceptor
+
+
+    testImplementation libs.junit
+    testImplementation libs.truth
+    testImplementation libs.coroutinesTest
+    testImplementation libs.coreTesting
 }
