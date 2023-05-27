@@ -12,8 +12,8 @@ val useCaseModule = module {
         GetLatestSearchesUseCase(get())
     }
 
-    factory {
-        SearchFactsUseCase(get(), get())
+    factory<SearchFactsUseCase> {
+        SearchFactsUseCaseImpl(get(), get())
     }
 
     factory<SyncCategoriesUseCase> {

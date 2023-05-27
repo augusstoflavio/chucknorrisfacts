@@ -40,10 +40,6 @@ class FactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        factsViewModel.onNewUiEvent(
-            FactsUiEvent.OnInitScreen,
-        )
-
         setupToolbar()
         setupViews()
         setupObservables()
@@ -134,7 +130,7 @@ class FactsFragment : Fragment() {
 
     private fun onClickFact(factUi: FactUi) {
         factsViewModel.onNewUiEvent(
-            FactsUiEvent.OnClickToShareFact(factUi),
+            FactsUiEvent.OnClickShareFactButton(factUi),
         )
     }
 
