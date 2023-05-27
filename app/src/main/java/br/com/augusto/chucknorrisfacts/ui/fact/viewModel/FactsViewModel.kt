@@ -30,18 +30,13 @@ class FactsViewModel(
 
     fun onNewUiEvent(factsUiEvent: FactsUiEvent) {
         when (factsUiEvent) {
-            FactsUiEvent.OnInitScreen -> handleOnInitScreen()
             is FactsUiEvent.OnClickSearchButton -> handleClickSearchButton()
-            is FactsUiEvent.OnClickToShareFact -> handleOnClickToShareFact(factsUiEvent.factUi)
+            is FactsUiEvent.OnClickShareFactButton -> {
+                handleOnClickShareFactButton(factsUiEvent.factUi)
+            }
             FactsUiEvent.OnClickTryAgainSearchFacts -> handleOnClickTryAgainSearchFacts()
             is FactsUiEvent.OnReceiveSearch -> handleOnReceiveSearch(factsUiEvent.search)
         }
-    }
-
-    private fun handleOnInitScreen() {
-        _uiState.value = _uiState.value?.copy(
-            showMessageToSearchFact = true,
-        )
     }
 
     private fun search() {
@@ -80,7 +75,7 @@ class FactsViewModel(
         _uiSideEffect.value = FactsUiSideEffect.NavigateTo.SearchScreen
     }
 
-    private fun handleOnClickToShareFact(factUi: FactUi) {
+    private fun handleOnClickShareFactButton(factUi: FactUi) {
         _uiSideEffect.value = FactsUiSideEffect.Open.FactSharedDialog(factUi)
     }
 
