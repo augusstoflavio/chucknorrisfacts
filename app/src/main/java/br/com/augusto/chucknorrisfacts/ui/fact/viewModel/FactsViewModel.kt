@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class FactsViewModel(
     private val searchFactsUseCase: SearchFactsUseCase,
-    private val factUiMapper: FactUiMapper
+    private val factUiMapper: FactUiMapper,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(FactsUiState())
@@ -88,7 +88,6 @@ class FactsViewModel(
             search = search,
             showMessageToSearchFact = false,
             showMessageNoFactFound = false,
-            showFactsList = true,
         )
 
         search()
