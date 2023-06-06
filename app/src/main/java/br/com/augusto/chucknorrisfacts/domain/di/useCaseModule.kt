@@ -4,12 +4,12 @@ import br.com.augusto.chucknorrisfacts.domain.useCase.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory {
-        GetRandomCategoriesUseCase(get())
+    factory<GetRandomCategoriesUseCase> {
+        GetRandomCategoriesUseCaseImpl(get())
     }
 
-    factory {
-        GetLatestSearchesUseCase(get())
+    factory<GetLatestSearchesUseCase> {
+        GetLatestSearchesUseCaseImpl(get())
     }
 
     factory<SearchFactsUseCase> {

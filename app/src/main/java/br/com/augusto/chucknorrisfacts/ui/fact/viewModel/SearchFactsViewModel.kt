@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Category
 import br.com.augusto.chucknorrisfacts.domain.model.Search
-import br.com.augusto.chucknorrisfacts.domain.useCase.GetRandomCategoriesUseCase
 import br.com.augusto.chucknorrisfacts.domain.useCase.GetLatestSearchesUseCase
+import br.com.augusto.chucknorrisfacts.domain.useCase.GetRandomCategoriesUseCase
+import br.com.augusto.chucknorrisfacts.ui.fact.extensions.toCategoryUi
+import br.com.augusto.chucknorrisfacts.ui.fact.extensions.toSearchUi
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.SearchFactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.SearchFactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.SearchFactsUiSideEffect
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 class SearchFactsViewModel(
     private val getLatestSearchesUseCase: GetLatestSearchesUseCase,
     private val getRandomCategoriesUseCase: GetRandomCategoriesUseCase,
-    private val initialUiState: SearchFactsUiState = SearchFactsUiState(),
+    initialUiState: SearchFactsUiState = SearchFactsUiState(),
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(initialUiState)
@@ -80,9 +82,7 @@ class SearchFactsViewModel(
     private fun onLoadLastSearchesSuccessfully(data: List<Search>) {
         _uiState.value = _uiState.value?.copy(
             lastSearches = data.map {
-                SearchUi(
-                    name = it.name,
-                )
+                it.toSearchUi()
             },
         )
     }
@@ -98,7 +98,7 @@ class SearchFactsViewModel(
         isLoadingCategories = true
 
         viewModelScope.launch {
-            when (val result = getRandomCategoriesUseCase.invoke(8)) {
+            when (val result = getRandomCategoriesUseCase.invoke(LIMIT_CATEGORIES)) {
                 is Result.Success -> onLoadCategoriesSuccessfully(result.data)
                 is Result.Error -> onLoadCategoriesWithError(result)
             }
@@ -110,9 +110,7 @@ class SearchFactsViewModel(
     private fun onLoadCategoriesSuccessfully(data: List<Category>) {
         _uiState.value = _uiState.value?.copy(
             categories = data.map {
-                CategoryUi(
-                    name = it.name ?: "",
-                )
+                it.toCategoryUi()
             },
         )
     }
@@ -128,5 +126,9 @@ class SearchFactsViewModel(
         _uiSideEffect.value = SearchFactsUiSideEffect.Navigate.ToPreviousScreenWithSearch(
             search = search,
         )
+    }
+
+    companion object {
+        private const val LIMIT_CATEGORIES = 8
     }
 }
