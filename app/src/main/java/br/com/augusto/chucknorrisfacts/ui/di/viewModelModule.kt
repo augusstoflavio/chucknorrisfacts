@@ -10,7 +10,6 @@ val viewModelModule = module {
     viewModel {
         FactsViewModel(
             searchFactsUseCase = get(),
-            factUiMapper = get(),
         )
     }
 

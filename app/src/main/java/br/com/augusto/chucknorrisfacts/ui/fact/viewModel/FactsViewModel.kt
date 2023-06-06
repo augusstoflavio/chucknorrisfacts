@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.model.Fact
 import br.com.augusto.chucknorrisfacts.domain.useCase.SearchFactsUseCase
-import br.com.augusto.chucknorrisfacts.ui.fact.mapper.FactUiMapper
+import br.com.augusto.chucknorrisfacts.ui.fact.extensions.toFactUi
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.FactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 class FactsViewModel(
     private val searchFactsUseCase: SearchFactsUseCase,
-    private val factUiMapper: FactUiMapper,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData(FactsUiState())
@@ -54,7 +53,9 @@ class FactsViewModel(
     private fun onSearchFactsSuccessfully(facts: List<Fact>) {
         _uiState.value = _uiState.value?.copy(
             showLoading = false,
-            facts = facts.map(factUiMapper::fromModel),
+            facts = facts.map {
+                it.toFactUi()
+            },
             showFactsList = facts.isNotEmpty(),
             showMessageNoFactFound = facts.isEmpty(),
         )
