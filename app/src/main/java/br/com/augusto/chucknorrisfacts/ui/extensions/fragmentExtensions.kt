@@ -1,13 +1,9 @@
 package br.com.augusto.chucknorrisfacts.ui.extensions
 
-import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import br.com.augusto.chucknorrisfacts.R
-import br.com.augusto.chucknorrisfacts.domain.Result
 
 fun Fragment.shareText(text: String, title: String) {
     val shareIntent = Intent(Intent.ACTION_SEND)
