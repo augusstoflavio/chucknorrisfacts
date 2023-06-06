@@ -6,8 +6,6 @@ import br.com.augusto.chucknorrisfacts.dispatcher.MainDispatcherRule
 import br.com.augusto.chucknorrisfacts.domain.Result
 import br.com.augusto.chucknorrisfacts.domain.useCase.SearchFactsUseCaseFake
 import br.com.augusto.chucknorrisfacts.ui.extensions.awaitValue
-import br.com.augusto.chucknorrisfacts.ui.fact.mapper.FactUiMapper
-import br.com.augusto.chucknorrisfacts.ui.fact.mapper.FactUiMapperImpl
 import br.com.augusto.chucknorrisfacts.ui.fact.uiError.FactsUiError
 import br.com.augusto.chucknorrisfacts.ui.fact.uiEvent.FactsUiEvent
 import br.com.augusto.chucknorrisfacts.ui.fact.uiSideEffect.FactsUiSideEffect
@@ -33,14 +31,12 @@ class FactsViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var factsViewModel: FactsViewModel
-    private var factUiMapper: FactUiMapper = FactUiMapperImpl()
     private var searchFactsUseCaseFake: SearchFactsUseCaseFake = SearchFactsUseCaseFake()
 
     @Before
     fun setup() {
         factsViewModel = FactsViewModel(
             searchFactsUseCase = searchFactsUseCaseFake,
-            factUiMapper = factUiMapper,
         )
     }
 
