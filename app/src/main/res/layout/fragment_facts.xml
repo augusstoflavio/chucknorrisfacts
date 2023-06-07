@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Busque os fatos relacionados a chuck norris"
+            android:text="@string/search_facts_message"
             android:textSize="18sp"
             android:visibility="gone"
             tools:visibility="visible" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Nenhum fato encontrado"
+            android:text="@string/fact_not_found"
             android:textSize="18sp"
             android:visibility="gone"
             tools:visibility="visible" />

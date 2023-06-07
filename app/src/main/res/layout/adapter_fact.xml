@@ -40,7 +40,8 @@
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/value"
-                app:srcCompat="@drawable/ic_baseline_share_24" />
+                app:srcCompat="@drawable/ic_baseline_share_24"
+                android:contentDescription="@string/shared_button_content_description" />
 
             <TextView
                 android:id="@+id/category"

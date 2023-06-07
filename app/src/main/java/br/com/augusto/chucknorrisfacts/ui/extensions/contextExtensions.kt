@@ -69,7 +69,7 @@ private fun Context.showDialogError(title: String, message: String, tryAgainActi
             },
         ),
         negativeButton = AlertDialogButton(
-            name = getString(R.string.ok),
+            name = getString(R.string.dialog_error_negative_button),
             action = {
                 it.dismiss()
             },
